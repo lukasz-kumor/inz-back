@@ -80,13 +80,14 @@ public class _UserResponse {
 
     @Override
     public String toString(){
-        return "PlayerResponse{" +
+        return "UserResponse{" +
                 "id="+id +
                 ",name="+name +
                 ",lastname="+lastname +
                 ",year="+year +
                 ",email="+email +
                 ",phone="+phone +
+                ",role="+role+
                 "}";
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
+
 
 @RestController
 public class _UserController {
@@ -28,6 +30,21 @@ public class _UserController {
 
         return new ResponseEntity<_UserResponse>(response, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<_UserResponse> getUser(@PathVariable Integer id){
+       _User _user = userRepository.findById(id);
+       System.out.println(id);
+       System.out.println(_user);
+       if(_user == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+       _UserResponse response = new _UserResponse(_user);
+
+       return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+    }
+
 
     public String calculateCategory(Integer age) {
         if (age < 14) return "Młodzik";

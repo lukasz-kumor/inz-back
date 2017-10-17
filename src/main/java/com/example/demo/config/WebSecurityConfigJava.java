@@ -57,7 +57,8 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                        "/**/*.js"
                ).permitAll()
                .antMatchers("/auth/**",
-                            "/user"
+                            "/user",
+                        "/user/{id}"
                         ).permitAll()
                .anyRequest().authenticated();
 
