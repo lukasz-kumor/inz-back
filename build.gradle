@@ -1,0 +1,49 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+
+	compile('org.springframework.boot:spring-boot-starter-validation')
+	compile('org.springframework.boot:spring-boot-starter-web-services')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok:1.16.16')
+	runtime('org.postgresql:postgresql')
+	compileOnly('org.projectlombok:lombok')
+    compile('org.apache.tomcat.embed:tomcat-embed-jasper','javax.servlet:jstl')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+    compile 'io.jsonwebtoken:jjwt:0.9.0'
+    compile('log4j:log4j:1.2.14')
+    compile('org.apache.directory.studio:org.apache.commons.io:2.4')
+    compile ('javax.servlet:jstl:3.0.1')
+    compile group: 'net.minidev', name: 'json-smart', version: '2.3'
+    compile group: 'net.minidev', name: 'asm', version: '1.0.2'
+	compile group: 'com.fasterxml.jackson.core', name :'jackson-core', version:'2.6.2'
+	compile group: 'com.fasterxml.jackson.core', name :'jackson-databind', version:'2.6.2'
+}
