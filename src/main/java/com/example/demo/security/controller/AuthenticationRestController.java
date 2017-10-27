@@ -68,6 +68,8 @@ public class AuthenticationRestController {
 
 
         _User _user = userRepository.findById(user.getId());
+        System.out.println("logowaniue aktywowany?+"+_user.isActivated());
+        if(!_user.isActivated()) return new ResponseEntity<JwtAuthenticationResponse>(HttpStatus.BAD_REQUEST);
         String name = _user.getName();
         String lastname = _user.getLastname();
         int id = _user.getId();

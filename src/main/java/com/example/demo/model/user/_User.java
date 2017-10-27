@@ -25,8 +25,8 @@ public class _User {
     private String role;
     @NotNull
     private int year;
-
-
+    private boolean isActivated=false;
+    private String code;
     public _User(){}
 
     public _User(String email, String lastname, String name, String password, String phone, int year, String role) {
@@ -37,6 +37,22 @@ public class _User {
         this.phone = phone;
         this.year = year;
         this.role = role;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 
     public String getRole() {
@@ -117,6 +133,7 @@ public class _User {
                 ",phone="+phone +
                 ",password="+password +
                 ",role=" +role+
+                ",code=" + code+
                 "}";
     }
 }

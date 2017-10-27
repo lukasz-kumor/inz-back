@@ -52,7 +52,9 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user4.setPassword("12341234");
         _user4.setPhone("12341234");
         _user4.setRole("Zawodnik");
+        _user4.setCode("asdgsdgs");
         _user4.setYear(1995);
+        _user4.setActivated(false);
         userRepository.save(_user4);
     }
 
