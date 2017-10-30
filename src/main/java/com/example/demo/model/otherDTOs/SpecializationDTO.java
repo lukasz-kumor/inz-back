@@ -1,11 +1,11 @@
-package com.example.demo.model.specialization;
+package com.example.demo.model.otherDTOs;
 import com.example.demo.model.user._User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Specialization {
+public class SpecializationDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "public")
@@ -22,14 +22,14 @@ public class Specialization {
     @NotNull
     private int team_id=0;
 
-    public Specialization(){}
+    public SpecializationDTO(){}
 
 
-    public Specialization(_User user){
+    public SpecializationDTO(_User user){
 
         this.user = user;
     }
-    public Specialization(int team_id, _User user){
+    public SpecializationDTO(int team_id, _User user){
 
         this.team_id = team_id;
         this.user = user;

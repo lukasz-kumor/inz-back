@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ActivateEmail {
+public class ActivateEmailRequest {
     private String email;
-    public ActivateEmail(){}
-    public ActivateEmail(String email){
+    public ActivateEmailRequest(){}
+    public ActivateEmailRequest(String email){
         this.email = email;
     }
 }
