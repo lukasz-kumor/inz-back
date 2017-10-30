@@ -64,20 +64,22 @@ public class _UserController {
 
 
     @PostMapping(value = "/user/activate")
-    public ResponseEntity<?> sendActivationEmail(@RequestBody ActivateEmail activateEmail) {
-        if(userRepository.findByEmail(activateEmail.getEmail())==null) { return new ResponseEntity(activateEmail,HttpStatus.BAD_REQUEST); }
+    public ResponseEntity<?> sendActivationEmail(@RequestBody ActivateEmailRequest activateEmailRequest) {
+
+        if(userRepository.findByEmail(activateEmailRequest.getEmail())==null) { return new ResponseEntity(activateEmailRequest,HttpStatus.BAD_REQUEST); }
         String from = "basketblast1234@gmail.com";
-        String to = activateEmail.getEmail();
+        String to = activateEmailRequest.getEmail();
         String subject = "Aktywacja konta";
-        String body = "Link aktywacyjny do serwisu BasketBlast: " + "http://localhost:8080/user/activate/"+userRepository.findByEmail(activateEmail.getEmail()).getCode();
+        String body = "Link aktywacyjny do serwisu BasketBlast: " + "http://localhost:8080/user/activate/"+userRepository.findByEmail(activateEmailRequest.getEmail()).getCode();
         mailSenderService.sendEmail(from,to,subject,body);
 
-        return new ResponseEntity(activateEmail,HttpStatus.OK);
+        return new ResponseEntity(activateEmailRequest,HttpStatus.OK);
     }
 
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<_UserResponse> getUser(@PathVariable Integer id){
-       _User _user = userRepository.findById(id);
+
+        _User _user = userRepository.findById(id);
 
        if(_user == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 

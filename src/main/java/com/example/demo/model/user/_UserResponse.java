@@ -1,5 +1,10 @@
 package com.example.demo.model.user;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class _UserResponse {
 
     private int id;
@@ -25,64 +30,12 @@ public class _UserResponse {
         this.role=user.getRole();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 
     @Override
     public String toString(){
         return "UserResponse{" +
                 "id="+id +
-                ",name="+name +
+                "name="+name +
                 ",lastname="+lastname +
                 ",year="+year +
                 ",email="+email +
