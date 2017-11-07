@@ -1,5 +1,6 @@
 package com.example.demo.model.user;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class _UserResponse {
     private String email;
     private String phone;
     private String role;
+    private int salary;
 
 
     public _UserResponse(){
@@ -28,6 +30,9 @@ public class _UserResponse {
         this.email=user.getEmail();
         this.phone=user.getPhone();
         this.role=user.getRole();
+        this.salary=user.getSalary();
+
+
     }
 
 
@@ -41,6 +46,7 @@ public class _UserResponse {
                 ",email="+email +
                 ",phone="+phone +
                 ",role="+role+
+                ",salary="+salary+
                 "}";
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.static_db;
 
 import com.example.demo.model.hall.HallDTO;
 import com.example.demo.model.hall.HallRepository;
+
 import com.example.demo.model.user._User;
 import com.example.demo.model.user._UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
 
     @Autowired
     private HallRepository hallRepository;
+
 
     private void newUsers() {
 
@@ -127,10 +129,19 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall4.setDescription("3000 miejsc na trybunach, scena, miękie deski, nowy parkiet, centralnie obok MC Donald's");
         hallRepository.save(hall4);
     }
+    private void newTeams() {
+//
+//        TeamDTO team1 = new TeamDTO();
+//        team1.setCity("Nicość");
+//        team1.setDescription("NIC");
+//        team1.setName("Brak");
+//        teamRepository.save(team1);
+    }
   @Override
     public void run(String... args) throws Exception  {
-
+        newTeams();
         newHalls();
         newUsers();
+
     }
 }
