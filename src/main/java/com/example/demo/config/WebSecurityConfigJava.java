@@ -64,7 +64,13 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                         "/user/verify",
                        "/search/users",
                        "/add/hall",
-                        "/search/halls"
+                        "/search/halls",
+                        "/edit/user",
+                        "/user/retrieve/{email}",
+                        "/user/salary/{id}/{salary}",
+                        "/msg",
+                        "/getmsg",
+                       "/create/team/{id}"
 //                       "/spam"
 
                         ).permitAll()

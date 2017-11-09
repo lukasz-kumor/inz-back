@@ -1,5 +1,7 @@
 package com.example.demo.model.user;
 
+
+import com.example.demo.model.team.TeamDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +17,8 @@ public class _UserResponse {
     private String email;
     private String phone;
     private String role;
-
+    private int salary;
+    private TeamDTO team;
 
     public _UserResponse(){
 
@@ -28,6 +31,9 @@ public class _UserResponse {
         this.email=user.getEmail();
         this.phone=user.getPhone();
         this.role=user.getRole();
+        this.salary=user.getSalary();
+        this.team=user.getTeamDTO();
+
     }
 
 
@@ -41,6 +47,8 @@ public class _UserResponse {
                 ",email="+email +
                 ",phone="+phone +
                 ",role="+role+
+                ",salary="+salary+
+                ",team+"+team+
                 "}";
     }
 }

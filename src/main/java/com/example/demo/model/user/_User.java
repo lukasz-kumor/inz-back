@@ -1,10 +1,13 @@
 package com.example.demo.model.user;
 
+
+import com.example.demo.model.team.TeamDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 @Entity
@@ -32,9 +35,31 @@ public class _User {
     private int year;
     @NotNull
     private boolean isActivated=false;
+    @NotNull
+    private boolean isBanned=false; //dodać logike banowania użytkowników dla admina
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "team_id",
+            referencedColumnName = "id")
+    private TeamDTO teamDTO;
+
+    private Date dateOfEdit=null;
+    private Date dateOfPasswordRetrieve=null;
+    private Date dateOfSalaryEdit=null;
+
+//    @PrePersist
+//    public void prePersist(){
+//        if(teamDTO==null){
+//            teamDTO.setId(0);
+//        }
+//    }
+    //ref
+    private int salary=0;
+
 
     private String code;
     public _User(){}
+
 
     public _User(String email, String lastname, String name, String password, String phone, int year, String role) {
         this.email= email;
@@ -45,6 +70,15 @@ public class _User {
         this.year = year;
         this.role = role;
     }
+
+    public _User(String email, String lastname, String name,  String phone, int year) {
+        this.email= email;
+        this.lastname = lastname;
+        this.name = name;
+        this.phone = phone;
+        this.year = year;
+    }
+
 
 
     @Override
@@ -58,7 +92,8 @@ public class _User {
                 ",phone="+phone +
                 ",password="+password +
                 ",role=" +role+
-                ",code=" + code+
+                ",salary=" + salary+
+
                 "}";
     }
 }
