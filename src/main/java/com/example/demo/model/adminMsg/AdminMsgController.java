@@ -7,10 +7,7 @@ import com.example.demo.model.user._UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,13 +21,13 @@ public class AdminMsgController {
     @Autowired
     public MailSenderService mailSenderService;
     @Autowired
-    public _UserRepository userRepostiroy;
+    public _UserRepository userRepository;
 
     @PostMapping(value = "/msg")
     public ResponseEntity<?> postMessage(@RequestBody AdminMsgRequest msgRequest) {
 
-        _User _user = userRepostiroy.findById(msgRequest.getId());
-        if(adminMsgRepository.findAllBy_user_Id(msgRequest.getId()).size()>2) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        _User _user = userRepository.findById(msgRequest.getId());
+        if(adminMsgRepository.findBy_user_Id(msgRequest.getId())!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
 
         AdminMsgDTO amd = new AdminMsgDTO(msgRequest.getMsg(),_user);
         adminMsgRepository.save(amd);
@@ -50,19 +47,32 @@ public class AdminMsgController {
 
     }
 
+    @PostMapping(value = "/answer")
+    public ResponseEntity<?> answerMessage(@RequestBody AdminAnswer answer) {
 
-//    @PostMapping(value = "/answer")
-//    public ResponseEntity<?> answerMessage(@RequestBody AdminMsgRequest msgRequest) {
-//
-//        _User _user = userRepostiroy.findById(msgRequest.getId());
-//        if(adminMsgRepository.findAllBy_user_Id(msgRequest.getId()).size()>2) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-//
-//        AdminMsgDTO amd = new AdminMsgDTO(msgRequest.getMsg(),_user);
-//        adminMsgRepository.save(amd);
-//
-//
-//        return new ResponseEntity<>(msgRequest, HttpStatus.OK);
-//    }
+        _User user_messager = userRepository.findByEmail(answer.getEmail());
+
+        String from = "basketblast1234@gmail.com";
+        String to = answer.getEmail();
+        String subject = "Odpowiedź serwisu BasketBlast";
+        String body = "Twoja wiadomość: " + answer.getMsgTo() + "\nOdpowiedź: " + answer.getMsgFrom();
+        mailSenderService.sendEmail(from,to,subject,body);
+        adminMsgRepository.delete(adminMsgRepository.findBy_user_Id(user_messager.getId()));
+
+
+
+        return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/delete/msg")
+    public ResponseEntity<?> deleteMessage(@RequestBody AdminAnswer answer) {
+
+        _User user_messager = userRepository.findByEmail(answer.getEmail());
+        adminMsgRepository.delete(adminMsgRepository.findBy_user_Id(user_messager.getId()));
+
+        return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
+
 
     private List<AdminMsgResponse> generateMsgResponse(List<AdminMsgDTO> AMD){
         List<AdminMsgResponse> response = new ArrayList<>();

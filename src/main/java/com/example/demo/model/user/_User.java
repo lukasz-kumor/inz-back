@@ -39,7 +39,7 @@ public class _User {
     private boolean isBanned=false; //dodać logike banowania użytkowników dla admina
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "team_id",
+    @JoinColumn(name = "team",
             referencedColumnName = "id")
     private TeamDTO teamDTO;
 
@@ -47,12 +47,6 @@ public class _User {
     private Date dateOfPasswordRetrieve=null;
     private Date dateOfSalaryEdit=null;
 
-//    @PrePersist
-//    public void prePersist(){
-//        if(teamDTO==null){
-//            teamDTO.setId(0);
-//        }
-//    }
     //ref
     private int salary=0;
 

@@ -39,7 +39,7 @@ public class TeamDTO {
                 "id="+id+
                 ",name="+name +
                 ",description="+description+
-                ",city"+city+
+                ",city="+city+
                 "}";
     }
 }

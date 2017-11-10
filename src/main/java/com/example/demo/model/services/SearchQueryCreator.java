@@ -1,7 +1,9 @@
 package com.example.demo.model.services;
 
 import com.example.demo.model.hall.HallDTO;
+import com.example.demo.model.search.SearchTeamRequest;
 import com.example.demo.model.search.SearchUserRequest;
+import com.example.demo.model.team.TeamDTO;
 import com.example.demo.model.user._User;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,16 @@ public class SearchQueryCreator {
         return stringBuilder.toString();
     }
 
+    public  String buildQuery(SearchTeamRequest request){
+
+        StringBuilder stringBuilder = new StringBuilder("SELECT teamdto.* from teamdto WHERE 1=1 ");
+        if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("AND UPPER(teamdto.city) = UPPER('" + request.getCity()+"')");
+
+        if(request.getName()!=null && !request.getName().equals("") )  stringBuilder.append("AND UPPER(teamdto.name) = UPPER('"+request.getName()+"')");
+
+
+        return stringBuilder.toString();
+    }
 
 
     public  List<HallDTO> executeHallQuery(String sqlQuery){
@@ -58,7 +70,15 @@ public class SearchQueryCreator {
         return executeHallQuery(sqlQuery);
     }
 
+    public  List<TeamDTO> executeTeamQuery(String sqlQuery){
+        Query query = entityManager.createNativeQuery(sqlQuery, TeamDTO.class);
+        return query.getResultList();
+    }
 
+    public  List<TeamDTO> buildAndExecuteTeamQuery(SearchTeamRequest request){
+        String sqlQuery = buildQuery(request);
+        return executeTeamQuery(sqlQuery);
+    }
 
 
     public  List<_User> executeUserQuery(String sqlQuery){
