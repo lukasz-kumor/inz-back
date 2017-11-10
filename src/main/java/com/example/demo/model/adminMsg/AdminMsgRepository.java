@@ -8,6 +8,7 @@ import java.util.List;
 public interface AdminMsgRepository extends CrudRepository<AdminMsgDTO, Integer> {
 
         AdminMsgDTO findById(int id);
-        List<AdminMsgDTO> findAllBy_user_Id(int id);
+        AdminMsgDTO findBy_user_Id(int id);
         List<AdminMsgDTO> findAll();
+
 }

@@ -24,12 +24,20 @@ public class Static_DB_Credentials implements CommandLineRunner {
 
     private void newUsers() {
 
+        TeamDTO team1 = new TeamDTO();
+        team1.setCity("Warszawa");
+        team1.setDescription("Pzykladowa drużyna");
+        team1.setName("COCO JAMBO WARSZAWA");
+        teamRepository.save(team1);
+
+
         _User _user = new _User();
         _user.setName("Trener");
         _user.setLastname("Kowalski");
         _user.setEmail("tk1@example.com");
         _user.setPassword("12341234");
         _user.setPhone("12341234");
+        _user.setTeamDTO(team1);
         _user.setRole("Trener");
 
         _user.setActivated(true);
@@ -39,13 +47,12 @@ public class Static_DB_Credentials implements CommandLineRunner {
 
 
         _User _user4 = new _User();
-        _user4.setName("Admin");
-        _user4.setLastname("Admin");
+        _user4.setName("Łukasz");
+        _user4.setLastname("Kumor");
         _user4.setEmail("1aryan@wp.pl");
         _user4.setPassword("12341234");
-        _user4.setPhone("12341234");
+        _user4.setPhone("997");
         _user4.setRole("Admin");
-        _user4.setCode("asdgsdgs");
         _user4.setYear(1995);
         _user4.setActivated(true);
         userRepository.save(_user4);
@@ -56,6 +63,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user8.setEmail("1a412421n@wp.pl");
         _user8.setPassword("12341234");
         _user8.setPhone("12341234");
+        _user8.setTeamDTO(team1);
         _user8.setRole("Zawodnik");
         _user8.setActivated(true);
         _user8.setYear(1995);
@@ -115,17 +123,18 @@ public class Static_DB_Credentials implements CommandLineRunner {
     }
     private void newTeams() {
 
-        TeamDTO team1 = new TeamDTO();
-        team1.setCity("Warszawa");
-        team1.setDescription("Pzykladowa drużyna");
-        team1.setName("COCO JAMBO WARSZAWA");
-        teamRepository.save(team1);
+
+        TeamDTO team2 = new TeamDTO();
+        team2.setCity("Pcim dolny");
+        team2.setDescription("Pzykladowa drużyna nr 2");
+        team2.setName("BERLIN TEAM YAH");
+        teamRepository.save(team2);
     }
   @Override
     public void run(String... args) throws Exception  {
         newTeams();
         newHalls();
         newUsers();
-            System.out.println(teamRepository.findAll());
+
     }
 }

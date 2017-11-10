@@ -70,7 +70,11 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                         "/user/salary/{id}/{salary}",
                         "/msg",
                         "/getmsg",
-                       "/create/team/{id}"
+                       "/create/team/{id}",
+                       "/search/teams",
+                        "/search/teams/{id}",
+                        "/answer",
+                        "/delete/msg"
 //                       "/spam"
 
                         ).permitAll()

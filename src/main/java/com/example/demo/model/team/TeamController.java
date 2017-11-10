@@ -24,7 +24,7 @@ public class TeamController {
 
         _User checkUser = _userRepository.findById(id);
         if(checkUser.getTeamDTO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        if(newTeam.getDescription().length()>60) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        if(newTeam.getDescription().length()>60 || newTeam.getCity().length()>30 || newTeam.getName().length()>30) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         teamRepository.save(newTeam);
         checkUser.setTeamDTO(newTeam);
         _userRepository.save(checkUser);
