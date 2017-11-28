@@ -24,8 +24,8 @@ public class HallDTO {
     private String city;
     @NotNull
     private String number;
-
-    private boolean isActivated=false;
+    @NotNull
+    private boolean activated=false;
 
     public HallDTO(){}
 
@@ -51,6 +51,7 @@ public class HallDTO {
                 ",adress="+adress +
                 ",city="+city+
                 ",number="+number+
+                ",activated="+activated+
                 "}";
     }
 

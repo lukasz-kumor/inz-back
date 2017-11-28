@@ -44,7 +44,7 @@ public class SearchQueryCreator {
 
         if(request.getNumber()!=null && !request.getNumber().equals("") ) stringBuilder.append("UPPER(halldto.number) = UPPER('"+request.getNumber()+"') AND ");
 
-        stringBuilder.append("(halldto.is_activated = true)");
+        stringBuilder.append("(halldto.activated = true)");
         return stringBuilder.toString();
     }
 

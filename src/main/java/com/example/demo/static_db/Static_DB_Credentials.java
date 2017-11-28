@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class Static_DB_Credentials implements CommandLineRunner {
 
@@ -28,8 +30,14 @@ public class Static_DB_Credentials implements CommandLineRunner {
         team1.setCity("Warszawa");
         team1.setDescription("Pzykladowa drużyna");
         team1.setName("COCO JAMBO WARSZAWA");
+        team1.setDateOfEdit(new Date());
         teamRepository.save(team1);
 
+        TeamDTO team2 = new TeamDTO();
+        team2.setCity("Pcim dolny");
+        team2.setDescription("Pzykladowa drużyna nr 2");
+        team2.setName("BERLIN TEAM YAH");
+        teamRepository.save(team2);
 
         _User _user = new _User();
         _user.setName("Trener");
@@ -37,6 +45,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user.setEmail("tk1@example.com");
         _user.setPassword("12341234");
         _user.setPhone("12341234");
+
         _user.setTeamDTO(team1);
         _user.setRole("Trener");
 
@@ -45,6 +54,19 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user.setYear(1994);
         userRepository.save(_user);
 
+        _User _user11 = new _User();
+        _user11.setName("Trener");
+        _user11.setLastname("Kowalski");
+        _user11.setEmail("tk2@example.com");
+        _user11.setPassword("12341234");
+        _user11.setPhone("12341234");
+       // _user11.setTeamDTO(team2);
+        _user11.setRole("Trener");
+
+        _user11.setActivated(true);
+
+        _user11.setYear(1994);
+        userRepository.save(_user11);
 
         _User _user4 = new _User();
         _user4.setName("Łukasz");
@@ -68,6 +90,17 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user8.setActivated(true);
         _user8.setYear(1995);
         userRepository.save(_user8);
+
+        _User _user12= new _User();
+        _user12.setName("Zawodnik");
+        _user12.setLastname("BezDruzyny");
+        _user12.setEmail("1a4gjh421n@wp.pl");
+        _user12.setPassword("12341234");
+        _user12.setPhone("12341234");
+        _user12.setRole("Zawodnik");
+        _user12.setActivated(true);
+        _user12.setYear(1995);
+        userRepository.save(_user12);
 
         _User _user5 = new _User();
         _user5.setName("Andrzej");
@@ -100,7 +133,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall2.setCity("Krakow");
         hall2.setNumber("13");
         hall2.setPrice("115");
-        hall2.setActivated(true);
+        hall2.setActivated(false);
         hallRepository.save(hall2);
 
         HallDTO hall3 = new HallDTO();
@@ -108,7 +141,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall3.setCity("Siedlce");
         hall3.setNumber("14b");
         hall3.setPrice("65");
-        hall3.setActivated(true);
+        hall3.setActivated(false);
         hall3.setDescription("Duża hala z trybunami przy moście");
         hallRepository.save(hall3);
 
@@ -124,11 +157,6 @@ public class Static_DB_Credentials implements CommandLineRunner {
     private void newTeams() {
 
 
-        TeamDTO team2 = new TeamDTO();
-        team2.setCity("Pcim dolny");
-        team2.setDescription("Pzykladowa drużyna nr 2");
-        team2.setName("BERLIN TEAM YAH");
-        teamRepository.save(team2);
     }
   @Override
     public void run(String... args) throws Exception  {

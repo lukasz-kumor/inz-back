@@ -28,7 +28,7 @@ public class AdminMsgController {
 
         _User _user = userRepository.findById(msgRequest.getId());
         if(adminMsgRepository.findBy_user_Id(msgRequest.getId())!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-
+        if(msgRequest.getMsg().length()>100) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         AdminMsgDTO amd = new AdminMsgDTO(msgRequest.getMsg(),_user);
         adminMsgRepository.save(amd);
 

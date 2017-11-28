@@ -38,17 +38,17 @@ public class _User {
     @NotNull
     private boolean isBanned=false; //dodać logike banowania użytkowników dla admina
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "team",
             referencedColumnName = "id")
     private TeamDTO teamDTO;
 
     private Date dateOfEdit=null;
     private Date dateOfPasswordRetrieve=null;
-    private Date dateOfSalaryEdit=null;
+//    private Date dateOfSalaryEdit=null;
 
-    //ref
-    private int salary=0;
+//    //ref
+//    private int salary=0;
 
 
     private String code;
@@ -86,8 +86,8 @@ public class _User {
                 ",phone="+phone +
                 ",password="+password +
                 ",role=" +role+
-                ",salary=" + salary+
-
+//                ",salary=" + salary+
+                ",team=" + teamDTO+
                 "}";
     }
 }

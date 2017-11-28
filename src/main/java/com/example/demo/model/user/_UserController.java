@@ -114,36 +114,37 @@ public class _UserController {
 
     }
 
-    @GetMapping(value = "/user/salary/{id}/{salary}")
-    public ResponseEntity<?> editSalary(@PathVariable Integer id, @PathVariable Integer salary) {
+//    @GetMapping(value = "/user/salary/{id}/{salary}")
+//    public ResponseEntity<?> editSalary(@PathVariable Integer id, @PathVariable Integer salary) {
+//
+//        if(userRepository.findById(id)==null){
+//            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+//        }
+//        _User _user = userRepository.findById(id);
+//
+//        if(userRepository.findById(id).getDateOfPasswordRetrieve()!=null) {
+//            Date date = _user.getDateOfSalaryEdit();
+//            Date dateNow = new Date();
+//            long diff = dateNow.getTime() - date.getTime();
+//            long diffHours = diff / (60 * 60 * 1000);
+//
+//            if (diffHours < 168) {
+//                return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+//            }
+//        }
+//        if(userRepository.findById(id).getDateOfSalaryEdit()==null){
+//            Date date3 = new Date();
+//            System.out.println(date3);
+//            _user.setDateOfPasswordRetrieve(date3);
+//            userRepository.save(_user);
+//        }
+//        _user.setSalary(salary);
+//        userRepository.save(_user);
+//
+//        return new ResponseEntity<>(id,HttpStatus.OK);
+//
+//    }
 
-        if(userRepository.findById(id)==null){
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        }
-        _User _user = userRepository.findById(id);
-
-        if(userRepository.findById(id).getDateOfPasswordRetrieve()!=null) {
-            Date date = _user.getDateOfSalaryEdit();
-            Date dateNow = new Date();
-            long diff = dateNow.getTime() - date.getTime();
-            long diffHours = diff / (60 * 60 * 1000);
-
-            if (diffHours < 48) {
-                return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-            }
-        }
-        if(userRepository.findById(id).getDateOfSalaryEdit()==null){
-            Date date3 = new Date();
-            System.out.println(date3);
-            _user.setDateOfPasswordRetrieve(date3);
-            userRepository.save(_user);
-        }
-        _user.setSalary(salary);
-        userRepository.save(_user);
-
-        return new ResponseEntity<>(id,HttpStatus.OK);
-
-    }
 
     @GetMapping(value = "/user/activate/{code}")
     public StringBuilder activateUser(@PathVariable String code) {

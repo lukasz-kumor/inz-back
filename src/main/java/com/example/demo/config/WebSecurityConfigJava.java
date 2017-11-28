@@ -74,8 +74,16 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                        "/search/teams",
                         "/search/teams/{id}",
                         "/answer",
-                        "/delete/msg"
-//                       "/spam"
+                        "/delete/msg",
+                        "/invite/team",
+                        "/invitation/player/{id}",
+                        "/halls/inactive",
+                       "/halls/activate/{id}",
+                       "/invitation/deny/{idPlayer}/{idTeam}",
+                       "/invitation/accept/{idPlayer}/{idTeam}",
+                       "/team/remove/player/{id}",
+                       "/edit/team/{id}",
+                       "/team/remove/{id}"
 
                         ).permitAll()
                .anyRequest().authenticated();

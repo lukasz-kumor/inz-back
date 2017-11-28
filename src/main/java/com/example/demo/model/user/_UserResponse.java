@@ -31,7 +31,7 @@ public class _UserResponse {
         this.email=user.getEmail();
         this.phone=user.getPhone();
         this.role=user.getRole();
-        this.salary=user.getSalary();
+//        this.salary=user.getSalary();
         this.team=user.getTeamDTO();
 
     }

@@ -9,5 +9,5 @@ public interface TeamRepository extends CrudRepository<TeamDTO, Integer> {
 
     TeamDTO findById(int id);
     List<TeamDTO> findAllById(int id);
-
+    TeamDTO findByName(String name);
 }
