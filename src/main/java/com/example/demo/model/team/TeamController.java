@@ -22,16 +22,16 @@ public class TeamController {
     private _UserRepository _userRepository;
 
     @PostMapping(value = "/create/team/{id}")
-    public ResponseEntity<?> createTeam(@PathVariable Integer id, @RequestBody TeamDTO newTeam) {
+    public ResponseEntity<?> createTeam(@PathVariable Integer id, @RequestBody TeamDAO newTeam) {
 
 
         if(newTeam.getCity().length()<3 || newTeam.getName().length()<3) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         _User checkUser = _userRepository.findById(id);
-        if(checkUser.getTeamDTO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        if(checkUser.getTeamDAO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         if(newTeam.getDescription().length()>60 || newTeam.getCity().length()>30 || newTeam.getName().length()>30) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
 
         teamRepository.save(newTeam);
-        checkUser.setTeamDTO(newTeam);
+        checkUser.setTeamDAO(newTeam);
         _userRepository.save(checkUser);
         _UserResponse response = new _UserResponse(checkUser);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -40,23 +40,17 @@ public class TeamController {
     @Transactional
     @GetMapping(value ="/team/remove/player/{id}")
     public ResponseEntity<?> removePlayerFromTeam(@PathVariable Integer id){
-        _userRepository.findById(id).setTeamDTO(null);
+        _userRepository.findById(id).setTeamDAO(null);
 
     return new ResponseEntity<>(id,HttpStatus.OK);
     }
 
-    @Transactional
-    @GetMapping(value = "team/remove/{id}")
-    public ResponseEntity<?> removeTeam(@PathVariable Integer id){
-      System.out.println(teamRepository.findById(id));
-        teamRepository.delete(id);
-
-        return new ResponseEntity<>(id,HttpStatus.OK);
-    }
-
-    @Transactional
     @PostMapping(value = "/edit/team/{id}")
-    public ResponseEntity<?> editTeam(@PathVariable Integer id, @RequestBody TeamDTO editedTeam){
+    public ResponseEntity<?> editTeam(@PathVariable Integer id, @RequestBody TeamDAO editedTeam){
+
+
+        TeamDAO team = teamRepository.findById(id);
+
         if(teamRepository.findById(id).getDateOfEdit()!=null) {
             Date date = teamRepository.findById(id).getDateOfEdit();
             Calendar dateOfChanges = Calendar.getInstance();
@@ -64,19 +58,26 @@ public class TeamController {
             Date dateToday = new Date();
 
             if (dateOfChanges.getTime().compareTo(dateToday) < 7) {
-
                 return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
             }
         }
        else {
-            if (editedTeam.getName().length() > 3 && editedTeam.getCity().length() > 3 && editedTeam.getName().length()<30 && editedTeam.getCity().length()<30 && editedTeam.getDescription().length()<60) {
-                teamRepository.findById(id).setCity(editedTeam.getCity());
-                teamRepository.findById(id).setName(editedTeam.getName());
-                teamRepository.findById(id).setDateOfEdit(new Date());
-                if (!editedTeam.getDescription().isEmpty())
-                    teamRepository.findById(id).setDescription(editedTeam.getDescription());
+            if (editedTeam.getName().length() > 3 && editedTeam.getCity().length() > 3 && editedTeam.getName().length()<30 && editedTeam.getCity().length()<30) {
+                    team.setCity(editedTeam.getCity());
+                    team.setName(editedTeam.getName());
+                    team.setDateOfEdit(new Date());
+                if(editedTeam.getDescription()!=null){
+                if (editedTeam.getDescription().length()<60){
+                    team.setDescription(editedTeam.getDescription());
+                }
+                else return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+                }
+
+
+
             } else return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
+        teamRepository.save(team);
         return new ResponseEntity<>(id, HttpStatus.OK);
 
     }

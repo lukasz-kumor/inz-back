@@ -1,17 +1,15 @@
 package com.example.demo.static_db;
 
-import com.example.demo.model.hall.HallDTO;
+import com.example.demo.model.hall.HallDAO;
 import com.example.demo.model.hall.HallRepository;
 
-import com.example.demo.model.team.TeamDTO;
+import com.example.demo.model.team.TeamDAO;
 import com.example.demo.model.team.TeamRepository;
 import com.example.demo.model.user._User;
 import com.example.demo.model.user._UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 public class Static_DB_Credentials implements CommandLineRunner {
@@ -24,103 +22,112 @@ public class Static_DB_Credentials implements CommandLineRunner {
     @Autowired
     private TeamRepository teamRepository;
 
-    private void newUsers() {
 
-        TeamDTO team1 = new TeamDTO();
+    private void newUsers() {
+        ///druzyny
+        TeamDAO team1 = new TeamDAO();
         team1.setCity("Warszawa");
-        team1.setDescription("Pzykladowa drużyna");
-        team1.setName("COCO JAMBO WARSZAWA");
-        team1.setDateOfEdit(new Date());
+        team1.setDescription("Drużyna nr 1");
+        team1.setName("TK1 Team");
         teamRepository.save(team1);
 
-        TeamDTO team2 = new TeamDTO();
-        team2.setCity("Pcim dolny");
-        team2.setDescription("Pzykladowa drużyna nr 2");
-        team2.setName("BERLIN TEAM YAH");
+        TeamDAO team2 = new TeamDAO();
+        team2.setCity("Pcim Dolny");
+        team2.setDescription("Drużyna nr 2");
+        team2.setName("TK2 Team");
         teamRepository.save(team2);
-
-        _User _user = new _User();
-        _user.setName("Trener");
-        _user.setLastname("Kowalski");
-        _user.setEmail("tk1@example.com");
-        _user.setPassword("12341234");
-        _user.setPhone("12341234");
-
-        _user.setTeamDTO(team1);
-        _user.setRole("Trener");
-
-        _user.setActivated(true);
-
-        _user.setYear(1994);
-        userRepository.save(_user);
-
-        _User _user11 = new _User();
-        _user11.setName("Trener");
-        _user11.setLastname("Kowalski");
-        _user11.setEmail("tk2@example.com");
-        _user11.setPassword("12341234");
-        _user11.setPhone("12341234");
-       // _user11.setTeamDTO(team2);
-        _user11.setRole("Trener");
-
-        _user11.setActivated(true);
-
-        _user11.setYear(1994);
-        userRepository.save(_user11);
-
-        _User _user4 = new _User();
-        _user4.setName("Łukasz");
-        _user4.setLastname("Kumor");
-        _user4.setEmail("1aryan@wp.pl");
-        _user4.setPassword("12341234");
-        _user4.setPhone("997");
-        _user4.setRole("Admin");
-        _user4.setYear(1995);
-        _user4.setActivated(true);
-        userRepository.save(_user4);
-
-        _User _user8 = new _User();
-        _user8.setName("Zawodnik");
-        _user8.setLastname("BezDruzyny");
-        _user8.setEmail("1a412421n@wp.pl");
-        _user8.setPassword("12341234");
-        _user8.setPhone("12341234");
-        _user8.setTeamDTO(team1);
-        _user8.setRole("Zawodnik");
-        _user8.setActivated(true);
-        _user8.setYear(1995);
-        userRepository.save(_user8);
-
-        _User _user12= new _User();
-        _user12.setName("Zawodnik");
-        _user12.setLastname("BezDruzyny");
-        _user12.setEmail("1a4gjh421n@wp.pl");
-        _user12.setPassword("12341234");
-        _user12.setPhone("12341234");
-        _user12.setRole("Zawodnik");
-        _user12.setActivated(true);
-        _user12.setYear(1995);
-        userRepository.save(_user12);
-
-        _User _user5 = new _User();
-        _user5.setName("Andrzej");
-        _user5.setLastname("Sedziowski");
-        _user5.setEmail("sedzia@wp.pl");
-        _user5.setPassword("12341234");
-        _user5.setPhone("12341234");
-        _user5.setRole("Sędzia");
-        _user5.setYear(1985);
-        _user5.setTeamDTO(teamRepository.findById(0));
-        _user5.setActivated(true);
-        userRepository.save(_user5);
+        ///admin
+        _User _user1 = new _User();
+        _user1.setName("Łukasz");
+        _user1.setLastname("Kumor");
+        _user1.setEmail("1aryan@wp.pl");
+        _user1.setPassword("12341234");
+        _user1.setPhone("668087723");
+        _user1.setRole("Admin");
+        _user1.setYear(1995);
+        _user1.setActivated(true);
+        userRepository.save(_user1);
 
 
+        //trenerzy
+        _User _user2 = new _User();
+        _user2.setName("Trener");
+        _user2.setLastname("Kowalski");
+        _user2.setEmail("t1@wp.pl");
+        _user2.setPassword("1234");
+        _user2.setPhone("938473627");
+        _user2.setTeamDAO(team1);
+        _user2.setRole("Trener");
+        _user2.setActivated(true);
+        _user2.setYear(1980);
+        userRepository.save(_user2);
+
+        _User _user3 = new _User();
+        _user3.setName("DrugiTrener");
+        _user3.setLastname("Janowski");
+        _user3.setEmail("t2@wp.pl");
+        _user3.setPassword("1234");
+        _user3.setPhone("605847362");
+        _user3.setTeamDAO(team2);
+        _user3.setRole("Trener");
+        _user3.setActivated(true);
+        _user3.setYear(1980);
+        userRepository.save(_user3);
+
+        ///playerzy
+//
+
+        for(int i=0;i<10;i++) {
+            _User user = new _User();
+           if(i%2==0) user.setTeamDAO(team1);
+            user.setName("Zawodnik[" + i + "]");
+            user.setActivated(true);
+            user.setRole("Zawodnik");
+            user.setPassword("1234");
+            user.setPhone("607837493");
+            user.setEmail("z" + i + "@wp.pl");
+            user.setLastname("Kowalski");
+            user.setYear(1990 + i);
+            userRepository.save(user);
+        }
+
+
+
+
+
+        for(int i=0;i<7;i++){
+            _User user = new _User();
+            user.setTeamDAO(team2);
+            user.setName("Player["+i+"]");
+            user.setActivated(true);
+            user.setRole("Zawodnik");
+            user.setPassword("1234");
+            user.setPhone("784384039");
+            user.setEmail("p"+i+"@wp.pl");
+            user.setLastname("Janowski");
+            user.setYear(1993+i);
+            userRepository.save(user);
+        }
+        //sedziowie
+        for(int i=0;i<3;i++){
+            _User user = new _User();
+
+            user.setName("Sędzia["+i+"]");
+            user.setActivated(true);
+            user.setRole("Sędzia");
+            user.setPhone("849384758");
+            user.setPassword("1234");
+            user.setEmail("s"+i+"@wp.pl");
+            user.setLastname("Petkow");
+            user.setYear(1980+i);
+            userRepository.save(user);
+        }
 
     }
     private void newHalls(){
 
 
-        HallDTO hall1 = new HallDTO();
+        HallDAO hall1 = new HallDAO();
         hall1.setAdress("Złota");
         hall1.setCity("Warszawa");
         hall1.setNumber("55");
@@ -128,7 +135,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall1.setActivated(true);
         hallRepository.save(hall1);
 
-        HallDTO hall2 = new HallDTO();
+        HallDAO hall2 = new HallDAO();
         hall2.setAdress("Agawy");
         hall2.setCity("Krakow");
         hall2.setNumber("13");
@@ -136,7 +143,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall2.setActivated(false);
         hallRepository.save(hall2);
 
-        HallDTO hall3 = new HallDTO();
+        HallDAO hall3 = new HallDAO();
         hall3.setAdress("Jakaśulica");
         hall3.setCity("Siedlce");
         hall3.setNumber("14b");
@@ -145,7 +152,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall3.setDescription("Duża hala z trybunami przy moście");
         hallRepository.save(hall3);
 
-        HallDTO hall4 = new HallDTO();
+        HallDAO hall4 = new HallDAO();
         hall4.setAdress("Żytnia");
         hall4.setCity("Kielce");
         hall4.setNumber("15");
@@ -154,13 +161,10 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall4.setDescription("3000 miejsc na trybunach, scena, miękie deski, nowy parkiet, centralnie obok MC Donald's");
         hallRepository.save(hall4);
     }
-    private void newTeams() {
 
-
-    }
   @Override
     public void run(String... args) throws Exception  {
-        newTeams();
+
         newHalls();
         newUsers();
 

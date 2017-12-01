@@ -1,7 +1,7 @@
 package com.example.demo.model.user;
 
 
-import com.example.demo.model.team.TeamDTO;
+import com.example.demo.model.team.TeamDAO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,9 +39,10 @@ public class _User {
     private boolean isBanned=false; //dodać logike banowania użytkowników dla admina
 
     @ManyToOne
-    @JoinColumn(name = "team",
+    @JoinColumn(name = "teamDAO",
             referencedColumnName = "id")
-    private TeamDTO teamDTO;
+    private TeamDAO teamDAO;
+
 
     private Date dateOfEdit=null;
     private Date dateOfPasswordRetrieve=null;
@@ -86,8 +87,6 @@ public class _User {
                 ",phone="+phone +
                 ",password="+password +
                 ",role=" +role+
-//                ",salary=" + salary+
-                ",team=" + teamDTO+
                 "}";
     }
 }

@@ -12,10 +12,10 @@ public class AdminMsgResponse {
     private String msg;
     private _User _user;
 
-    public AdminMsgResponse(AdminMsgDTO adminMsgDTO){
-        this.id=adminMsgDTO.getId();
-        this.msg=adminMsgDTO.getMsg();
-        this._user=adminMsgDTO.get_user();
+    public AdminMsgResponse(AdminMsgDAO adminMsgDAO){
+        this.id= adminMsgDAO.getId();
+        this.msg= adminMsgDAO.getMsg();
+        this._user= adminMsgDAO.get_user();
 
     }
     public String toString(){

@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class AdminMsgDTO {
+public class AdminMsgDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,9 +25,9 @@ public class AdminMsgDTO {
     private _User _user;
 
 
-    AdminMsgDTO(){}
+    AdminMsgDAO(){}
 
-    AdminMsgDTO(String msg, _User _user){
+    AdminMsgDAO(String msg, _User _user){
         this.msg = msg;
         this._user= _user;
     }

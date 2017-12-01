@@ -1,13 +1,12 @@
 package com.example.demo.team_invitations;
 
-import com.example.demo.model.user._User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface TeamInvitationRepository extends CrudRepository<TeamInvitationDTO, Integer> {
+public interface TeamInvitationRepository extends CrudRepository<TeamInvitationDAO, Integer> {
 
-    TeamInvitationDTO findByTeamDTO_IdAndUserId(int teamId,int userId);
-    List<TeamInvitationDTO> findAllByUserId(int id);
+    TeamInvitationDAO findByTeamDAO_IdAndUserId(int teamId, int userId);
+    List<TeamInvitationDAO> findAllByUserId(int id);
     void deleteAllByUserId(int userid);
 }

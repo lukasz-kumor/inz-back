@@ -1,10 +1,10 @@
 package com.example.demo.model.search;
 
-import com.example.demo.model.hall.HallDTO;
+import com.example.demo.model.hall.HallDAO;
 import com.example.demo.model.hall.HallRepository;
 import com.example.demo.model.hall.HallResponse;
 import com.example.demo.model.services.SearchQueryCreator;
-import com.example.demo.model.team.TeamDTO;
+import com.example.demo.model.team.TeamDAO;
 import com.example.demo.model.team.TeamRepository;
 import com.example.demo.model.user._User;
 import com.example.demo.model.user._UserRepository;
@@ -58,9 +58,9 @@ private List<_UserResponse> generateUserResponse(List<_User> _users){
 ///hall search
 
     @PostMapping(value = "/search/halls")
-    public ResponseEntity<List<HallResponse>> searchForUsers(@RequestBody HallDTO request){
+    public ResponseEntity<List<HallResponse>> searchForUsers(@RequestBody HallDAO request){
 
-        List<HallDTO> foundHalls = SQC.buildAndExecuteHallQuery(request);
+        List<HallDAO> foundHalls = SQC.buildAndExecuteHallQuery(request);
         if(foundHalls.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         List<HallResponse> response = generateHallResponse(foundHalls);
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
@@ -71,10 +71,10 @@ private List<_UserResponse> generateUserResponse(List<_User> _users){
 
     }
 
-    private List<HallResponse> generateHallResponse(List<HallDTO> halls){
+    private List<HallResponse> generateHallResponse(List<HallDAO> halls){
         List<HallResponse> response = new ArrayList<>();
 
-        for(HallDTO hall : halls){
+        for(HallDAO hall : halls){
             response.add(new HallResponse(hall));
         }
         return response;
@@ -82,9 +82,9 @@ private List<_UserResponse> generateUserResponse(List<_User> _users){
 
 ///team search
 @PostMapping(value = "/search/teams")
-public ResponseEntity<List<TeamDTO>> searchForUsers(@RequestBody SearchTeamRequest teamRequest){
+public ResponseEntity<List<TeamDAO>> searchForTeams(@RequestBody SearchTeamRequest teamRequest){
 
-        List<TeamDTO> foundTeams = SQC.buildAndExecuteTeamQuery(teamRequest);
+        List<TeamDAO> foundTeams = SQC.buildAndExecuteTeamQuery(teamRequest);
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         Integer total = foundTeams.size();
@@ -96,7 +96,7 @@ public ResponseEntity<List<TeamDTO>> searchForUsers(@RequestBody SearchTeamReque
 
     @GetMapping(value = "/search/teams/{id}")
     public ResponseEntity<?> getDetailedTeam(@PathVariable Integer id) {
-        List<_User> foundUsers = _userRepository.findByAndTeamDTO_IdOrderByRole(id);
+        List<_User> foundUsers = _userRepository.findByAndTeamDAO_IdOrderByRole(id);
 
         return new ResponseEntity<>(foundUsers,HttpStatus.OK) ;
 

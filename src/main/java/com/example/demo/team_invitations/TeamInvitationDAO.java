@@ -1,18 +1,15 @@
 package com.example.demo.team_invitations;
 
-import com.example.demo.model.team.TeamDTO;
-import com.example.demo.model.user._User;
+import com.example.demo.model.team.TeamDAO;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @Setter
-public class TeamInvitationDTO {
+public class TeamInvitationDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,13 +22,13 @@ public class TeamInvitationDTO {
     @ManyToOne(optional = true)
     @JoinColumn(name = "teaminv",
             referencedColumnName = "id")
-    private TeamDTO teamDTO;
+    private TeamDAO teamDAO;
 
     private int userId;
 
-    public TeamInvitationDTO(){}
-    public TeamInvitationDTO(TeamDTO teamDTO,int userId){
-        this.teamDTO=teamDTO;
+    public TeamInvitationDAO(){}
+    public TeamInvitationDAO(TeamDAO teamDAO, int userId){
+        this.teamDAO=teamDAO;
         this.userId=userId;
     }
 

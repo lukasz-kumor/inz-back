@@ -1,9 +1,9 @@
 package com.example.demo.model.services;
 
-import com.example.demo.model.hall.HallDTO;
+import com.example.demo.model.hall.HallDAO;
 import com.example.demo.model.search.SearchTeamRequest;
 import com.example.demo.model.search.SearchUserRequest;
-import com.example.demo.model.team.TeamDTO;
+import com.example.demo.model.team.TeamDAO;
 import com.example.demo.model.user._User;
 import org.springframework.stereotype.Service;
 
@@ -35,47 +35,47 @@ public class SearchQueryCreator {
     return stringBuilder.toString();
     }
 
-    public  String buildQuery(HallDTO request){
+    public  String buildQuery(HallDAO request){
 
-        StringBuilder stringBuilder = new StringBuilder("SELECT halldto.* from halldto WHERE ");
-        if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("UPPER(halldto.city) = UPPER('" + request.getCity()+"') AND ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT halldao.* from halldao WHERE ");
+        if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("UPPER(halldao.city) = UPPER('" + request.getCity()+"') AND ");
 
-        if(request.getAdress()!=null && !request.getAdress().equals("") )  stringBuilder.append("UPPER(halldto.adress) = UPPER('"+request.getAdress()+"') AND ");
+        if(request.getAdress()!=null && !request.getAdress().equals("") )  stringBuilder.append("UPPER(halldao.adress) = UPPER('"+request.getAdress()+"') AND ");
 
-        if(request.getNumber()!=null && !request.getNumber().equals("") ) stringBuilder.append("UPPER(halldto.number) = UPPER('"+request.getNumber()+"') AND ");
+        if(request.getNumber()!=null && !request.getNumber().equals("") ) stringBuilder.append("UPPER(halldao.number) = UPPER('"+request.getNumber()+"') AND ");
 
-        stringBuilder.append("(halldto.activated = true)");
+        stringBuilder.append("(halldao.activated = true)");
         return stringBuilder.toString();
     }
 
     public  String buildQuery(SearchTeamRequest request){
 
-        StringBuilder stringBuilder = new StringBuilder("SELECT teamdto.* from teamdto WHERE 1=1 ");
-        if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("AND UPPER(teamdto.city) = UPPER('" + request.getCity()+"')");
+        StringBuilder stringBuilder = new StringBuilder("SELECT teamdao.* from teamdao WHERE 1=1 ");
+        if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("AND UPPER(teamdao.city) = UPPER('" + request.getCity()+"')");
 
-        if(request.getName()!=null && !request.getName().equals("") )  stringBuilder.append("AND UPPER(teamdto.name) = UPPER('"+request.getName()+"')");
+        if(request.getName()!=null && !request.getName().equals("") )  stringBuilder.append("AND UPPER(teamdao.name) = UPPER('"+request.getName()+"')");
 
 
         return stringBuilder.toString();
     }
 
 
-    public  List<HallDTO> executeHallQuery(String sqlQuery){
-        Query query = entityManager.createNativeQuery(sqlQuery, HallDTO.class);
+    public  List<HallDAO> executeHallQuery(String sqlQuery){
+        Query query = entityManager.createNativeQuery(sqlQuery, HallDAO.class);
         return query.getResultList();
     }
 
-    public  List<HallDTO> buildAndExecuteHallQuery(HallDTO request){
+    public  List<HallDAO> buildAndExecuteHallQuery(HallDAO request){
         String sqlQuery = buildQuery(request);
         return executeHallQuery(sqlQuery);
     }
 
-    public  List<TeamDTO> executeTeamQuery(String sqlQuery){
-        Query query = entityManager.createNativeQuery(sqlQuery, TeamDTO.class);
+    public  List<TeamDAO> executeTeamQuery(String sqlQuery){
+        Query query = entityManager.createNativeQuery(sqlQuery, TeamDAO.class);
         return query.getResultList();
     }
 
-    public  List<TeamDTO> buildAndExecuteTeamQuery(SearchTeamRequest request){
+    public  List<TeamDAO> buildAndExecuteTeamQuery(SearchTeamRequest request){
         String sqlQuery = buildQuery(request);
         return executeTeamQuery(sqlQuery);
     }
