@@ -4,12 +4,12 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface HallRepository extends CrudRepository<HallDTO, Integer> {
+public interface HallRepository extends CrudRepository<HallDAO, Integer> {
 
-        HallDTO findById(Integer id );
-        HallDTO findByAdress(String adress);
-        List<HallDTO> findAll();
-        HallDTO findByCityAndAdress(String city, String adress);
-
+        HallDAO findById(Integer id );
+        HallDAO findByAdress(String adress);
+        List<HallDAO> findAll();
+        HallDAO findByCityAndAdress(String city, String adress);
+        List<HallDAO> findAllByAndActivated(boolean activated);
 
 }

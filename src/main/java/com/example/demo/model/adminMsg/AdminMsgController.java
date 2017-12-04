@@ -1,7 +1,6 @@
 package com.example.demo.model.adminMsg;
 
 import com.example.demo.model.services.MailSenderService;
-import com.example.demo.model.user.ActivateEmailRequest;
 import com.example.demo.model.user._User;
 import com.example.demo.model.user._UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,8 +26,8 @@ public class AdminMsgController {
 
         _User _user = userRepository.findById(msgRequest.getId());
         if(adminMsgRepository.findBy_user_Id(msgRequest.getId())!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-
-        AdminMsgDTO amd = new AdminMsgDTO(msgRequest.getMsg(),_user);
+        if(msgRequest.getMsg().length()>100) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        AdminMsgDAO amd = new AdminMsgDAO(msgRequest.getMsg(),_user);
         adminMsgRepository.save(amd);
 
 
@@ -39,7 +37,7 @@ public class AdminMsgController {
     @GetMapping(value = "/getmsg")
     public ResponseEntity<List<AdminMsgResponse>> getMessages() {
 
-        List<AdminMsgDTO> amr = adminMsgRepository.findAll();
+        List<AdminMsgDAO> amr = adminMsgRepository.findAll();
         if(amr.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         List<AdminMsgResponse> response = generateMsgResponse(amr);
 
@@ -74,10 +72,10 @@ public class AdminMsgController {
     }
 
 
-    private List<AdminMsgResponse> generateMsgResponse(List<AdminMsgDTO> AMD){
+    private List<AdminMsgResponse> generateMsgResponse(List<AdminMsgDAO> AMD){
         List<AdminMsgResponse> response = new ArrayList<>();
 
-        for(AdminMsgDTO amd : AMD){
+        for(AdminMsgDAO amd : AMD){
             response.add(new AdminMsgResponse(amd));
         }
         return response;

@@ -5,9 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface TeamRepository extends CrudRepository<TeamDTO, Integer> {
+public interface TeamRepository extends CrudRepository<TeamDAO, Integer> {
 
-    TeamDTO findById(int id);
-    List<TeamDTO> findAllById(int id);
-
+    TeamDAO findById(int id);
+    List<TeamDAO> findAllById(int id);
+    TeamDAO findByName(String name);
 }

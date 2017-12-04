@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableScheduling
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
@@ -74,8 +76,23 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                        "/search/teams",
                         "/search/teams/{id}",
                         "/answer",
-                        "/delete/msg"
-//                       "/spam"
+                        "/delete/msg",
+                        "/invite/team",
+                        "/invitation/player/{id}",
+                        "/halls/inactive",
+                       "/halls/activate/{id}",
+                       "/invitation/deny/{idPlayer}/{idTeam}",
+                       "/invitation/accept/{idPlayer}/{idTeam}",
+                       "/team/remove/player/{id}",
+                       "/edit/team/{id}",
+                       "/team/remove/{id}",
+                       "/match/invite",
+                       "/match/invites/{id}",
+                       "/match/invites/ref/{id}",
+                       "/match/ref/accept/{id}",
+                       "/match/deny/{id}",
+                       "/match/team/accept/{id}",
+                       "/matches/search"
 
                         ).permitAll()
                .anyRequest().authenticated();

@@ -5,10 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface AdminMsgRepository extends CrudRepository<AdminMsgDTO, Integer> {
+public interface AdminMsgRepository extends CrudRepository<AdminMsgDAO, Integer> {
 
-        AdminMsgDTO findById(int id);
-        AdminMsgDTO findBy_user_Id(int id);
-        List<AdminMsgDTO> findAll();
+        AdminMsgDAO findById(int id);
+        AdminMsgDAO findBy_user_Id(int id);
+        List<AdminMsgDAO> findAll();
 
 }

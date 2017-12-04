@@ -1,7 +1,7 @@
 package com.example.demo.model.user;
 
 
-import com.example.demo.model.team.TeamDTO;
+import com.example.demo.model.team.TeamDAO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ public class _UserResponse {
     private String phone;
     private String role;
     private int salary;
-    private TeamDTO team;
+    private TeamDAO team;
 
     public _UserResponse(){
 
@@ -31,8 +31,7 @@ public class _UserResponse {
         this.email=user.getEmail();
         this.phone=user.getPhone();
         this.role=user.getRole();
-        this.salary=user.getSalary();
-        this.team=user.getTeamDTO();
+        this.team=user.getTeamDAO();
 
     }
 

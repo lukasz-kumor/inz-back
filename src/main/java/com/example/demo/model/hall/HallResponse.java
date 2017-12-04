@@ -17,7 +17,7 @@ public class HallResponse {
     public HallResponse(){
 
     }
-    public HallResponse(HallDTO hall){
+    public HallResponse(HallDAO hall){
         this.id=hall.getId();
         this.description=hall.getDescription();
         this.price=hall.getPrice();

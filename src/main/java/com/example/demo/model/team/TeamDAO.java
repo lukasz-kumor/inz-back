@@ -1,5 +1,6 @@
 package com.example.demo.model.team;
 
+import com.example.demo.model.user._User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class TeamDTO {
+public class TeamDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,9 +26,10 @@ public class TeamDTO {
 
     private Date dateOfEdit;
 
-    public TeamDTO(){}
+    public TeamDAO(){}
 
-    public TeamDTO(String name, String description, String city){
+
+    public TeamDAO(String name, String description, String city){
         this.name=name;
         this.description=description;
         this.city=city;
