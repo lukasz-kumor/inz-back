@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @SpringBootApplication
+
 public class BackinzApplication {
 
 	public static void main(String[] args) {

@@ -3,6 +3,8 @@ package com.example.demo.static_db;
 import com.example.demo.model.hall.HallDAO;
 import com.example.demo.model.hall.HallRepository;
 
+import com.example.demo.model.match.MatchDAO;
+import com.example.demo.model.match.MatchRepository;
 import com.example.demo.model.team.TeamDAO;
 import com.example.demo.model.team.TeamRepository;
 import com.example.demo.model.user._User;
@@ -10,6 +12,8 @@ import com.example.demo.model.user._UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class Static_DB_Credentials implements CommandLineRunner {
@@ -21,7 +25,8 @@ public class Static_DB_Credentials implements CommandLineRunner {
     private HallRepository hallRepository;
     @Autowired
     private TeamRepository teamRepository;
-
+    @Autowired
+    private MatchRepository matchRepository;
 
     private void newUsers() {
         ///druzyny
@@ -143,14 +148,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall2.setActivated(false);
         hallRepository.save(hall2);
 
-        HallDAO hall3 = new HallDAO();
-        hall3.setAdress("Jakaśulica");
-        hall3.setCity("Siedlce");
-        hall3.setNumber("14b");
-        hall3.setPrice("65");
-        hall3.setActivated(false);
-        hall3.setDescription("Duża hala z trybunami przy moście");
-        hallRepository.save(hall3);
+
 
         HallDAO hall4 = new HallDAO();
         hall4.setAdress("Żytnia");
@@ -161,10 +159,32 @@ public class Static_DB_Credentials implements CommandLineRunner {
         hall4.setDescription("3000 miejsc na trybunach, scena, miękie deski, nowy parkiet, centralnie obok MC Donald's");
         hallRepository.save(hall4);
     }
+ private void newMatches(){
 
+     HallDAO hall3 = new HallDAO();
+     hall3.setAdress("Jakaśulica");
+     hall3.setCity("Siedlce");
+     hall3.setNumber("14b");
+     hall3.setPrice("65");
+     hall3.setActivated(true);
+     hall3.setDescription("Duża hala z trybunami przy moście");
+     hallRepository.save(hall3);
+
+     MatchDAO match1 = new MatchDAO();
+     match1.setActive(true);
+     match1.setHall(hall3);
+     match1.setTeamAid(30);
+     match1.setTeamBid(31);
+     match1.setBeginDate(new Date());
+     match1.setRefId(60);
+     match1.setTeamBaccepted(true);
+     match1.setRefAccepted(true);
+     match1.setSalary(200);
+     matchRepository.save(match1);
+ }
   @Override
     public void run(String... args) throws Exception  {
-
+        newMatches();
         newHalls();
         newUsers();
 
