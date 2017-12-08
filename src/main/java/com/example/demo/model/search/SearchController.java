@@ -3,6 +3,7 @@ package com.example.demo.model.search;
 import com.example.demo.model.hall.HallDAO;
 import com.example.demo.model.hall.HallRepository;
 import com.example.demo.model.hall.HallResponse;
+import com.example.demo.model.match.DateRequest;
 import com.example.demo.model.match.MatchDAO;
 import com.example.demo.model.match.MatchRepository;
 import com.example.demo.model.match.MatchResponse;
@@ -14,6 +15,7 @@ import com.example.demo.model.user._UserRepository;
 
 import com.example.demo.model.user._UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,8 +23,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -123,6 +129,63 @@ public ResponseEntity<List<MatchResponse>> searchForMatches(){
     return new ResponseEntity<List<MatchResponse>>(response, headers, HttpStatus.OK);
 
 }
+@PostMapping(value = "/matches/search/bydate")
+public ResponseEntity<List<MatchResponse>> searchForMatchesByDate(@RequestBody DateRequest dates){
+
+    List<MatchDAO> foundMatches = matchRepository.findAllByActive(true);
+    List<MatchDAO> filteredMatches = filterMatchesByDates(foundMatches,dates);
+    List<MatchResponse> response = generateMatchResponse(filteredMatches);
+
+    MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+    Integer total = response.size();
+    headers.add("total", total.toString());
+
+    return new ResponseEntity<List<MatchResponse>>(response, headers, HttpStatus.OK);
+}
+
+public List<MatchDAO> filterMatchesByDates(List<MatchDAO> foundMatches, DateRequest dates){
+    if(dates.getDateFrom()==null || dates.getDateFrom()=="" ) dates.setDateFrom("2000-01-01");
+    if(dates.getDateTo()==null || dates.getDateTo()=="") dates.setDateTo("2030-01-01");
+    List<MatchDAO> filteredMatches = new ArrayList<>();
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    Date  startDate = new Date();
+    Date endDate = new Date();
+    try {
+        startDate = df.parse(dates.getDateFrom());
+        endDate = df.parse(dates.getDateTo());
+        Calendar c = Calendar.getInstance();
+        c.setTime(endDate);
+        c.add(Calendar.DATE, 1);
+        endDate = c.getTime();
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+    for(int i=0;i<foundMatches.size();i++){
+        if(foundMatches.get(i).getBeginDate().after(startDate) && foundMatches.get(i).getBeginDate().before(endDate)) filteredMatches.add(foundMatches.get(i));
+    }
+    return filteredMatches;
+
+
+}
+
+@GetMapping(value = "/matches/search/{id}")
+public ResponseEntity<List<MatchResponse>> searchForTeamMatches(@PathVariable Integer id){
+    List<MatchDAO> foundMatches = matchRepository.findAllByTeamAidOrTeamBidAndFinishedAndActive(id,id,false,true);
+    List<MatchResponse> response = generateMatchResponse(foundMatches);
+    if(response.isEmpty()) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+    return new ResponseEntity<List<MatchResponse>>(response, HttpStatus.OK);
+
+}
+
+    @GetMapping(value = "/matches/ref/search/{id}")
+    public ResponseEntity<List<MatchResponse>> searchForRefMatches(@PathVariable Integer id){
+        List<MatchDAO> foundMatches = matchRepository.findAllByRefIdAndActive(id,true);
+        List<MatchResponse> response = generateMatchResponse(foundMatches);
+
+        return new ResponseEntity<List<MatchResponse>>(response, HttpStatus.OK);
+
+    }
+
     public List<MatchResponse> generateMatchResponse(List<MatchDAO> matchList){
 
         List<MatchResponse> responseList = new ArrayList<>();

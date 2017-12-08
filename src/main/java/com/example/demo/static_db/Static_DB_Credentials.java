@@ -177,6 +177,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
      match1.setTeamBid(31);
      match1.setBeginDate(new Date());
      match1.setRefId(60);
+
      match1.setTeamBaccepted(true);
      match1.setRefAccepted(true);
      match1.setSalary(200);

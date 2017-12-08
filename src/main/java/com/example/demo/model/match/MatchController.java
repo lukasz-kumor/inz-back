@@ -69,7 +69,7 @@ public class MatchController {
 @GetMapping(value = "/match/invites/{id}")
     public ResponseEntity<List<MatchResponse>> getTeamInvites(@PathVariable Integer id){
 
-    List<MatchDAO> invitesList= matchRepository.findAllByTeamBidAndInvitationAndTeamBaccepted(id,true,false);
+    List<MatchDAO> invitesList= matchRepository.findAllByTeamBidAndActiveAndTeamBaccepted(id,false,false);
     List<MatchResponse> responseList = new ArrayList<>();
     responseList = generateInvResponse(invitesList);
 
@@ -80,6 +80,7 @@ public class MatchController {
     public ResponseEntity<?> refAcceptMatch(@PathVariable Integer id){
         MatchDAO match = matchRepository.findById(id);
         match.setRefAccepted(true);
+        if(match.isTeamBaccepted()) match.setActive(true);
         matchRepository.save(match);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
@@ -88,7 +89,7 @@ public class MatchController {
     public ResponseEntity<?> teamAcceptMatch(@PathVariable Integer id){
         MatchDAO match = matchRepository.findById(id);
         match.setTeamBaccepted(true);
-        match.setActive(true);
+        if(match.isRefAccepted()) match.setActive(true);
         matchRepository.save(match);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
@@ -115,7 +116,7 @@ public class MatchController {
 
         List<MatchResponse> responseList = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
         for(int i=0; i<invitesList.size();i++){
             MatchResponse response = new MatchResponse();

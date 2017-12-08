@@ -92,7 +92,10 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                        "/match/ref/accept/{id}",
                        "/match/deny/{id}",
                        "/match/team/accept/{id}",
-                       "/matches/search"
+                       "/matches/search",
+                       "/matches/search/{id}",
+                       "/matches/ref/search/{id}",
+                       "/matches/search/bydate"
 
                         ).permitAll()
                .anyRequest().authenticated();

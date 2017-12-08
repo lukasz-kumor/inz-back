@@ -8,9 +8,11 @@ import java.util.List;
 public interface MatchRepository extends CrudRepository<MatchDAO, Integer> {
 
 MatchDAO findByBeginDateAndTeamAidAndTeamBid(Date date, int teamAid, int teamBid);
-List<MatchDAO> findAllByTeamBidAndInvitationAndTeamBaccepted(int id,boolean inv,boolean teamBaccepted);
+List<MatchDAO> findAllByTeamBidAndActiveAndTeamBaccepted(int id,boolean inv,boolean teamBaccepted);
 List<MatchDAO> findAllByRefIdAndRefAccepted(int id,boolean refAccepted);
 List<MatchDAO> findAllByFinished(boolean finished);
 MatchDAO findById(int id);
 List<MatchDAO> findAllByActive(boolean active);
+List<MatchDAO> findAllByTeamAidOrTeamBidAndFinishedAndActive(int teamAid, int teamBid,boolean finished,boolean active);
+List<MatchDAO> findAllByRefIdAndActive(int refId, boolean active);
 }
