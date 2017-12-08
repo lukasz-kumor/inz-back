@@ -33,12 +33,14 @@ public class MatchDAO {
     private int refId;
     @NotNull
     private int salary;
-
-    private boolean teamBaccepted=false;
-    private boolean refAccepted=false;
-    private boolean invitation=true;
-    private boolean finished=false;
-    private boolean active=false;
+    @NotNull
+    private boolean teamBaccepted;
+    @NotNull
+    private boolean refAccepted;
+    @NotNull
+    private boolean finished;
+    @NotNull
+    private boolean active;
 
     public MatchDAO(){}
 
@@ -49,6 +51,10 @@ public class MatchDAO {
         this.beginDate=beginDate;
         this.refId=refId;
         this.salary=salary;
+        this.teamBaccepted=false;
+        this.refAccepted=false;
+        this.finished=false;
+        this.active=false;
     }
 
 
