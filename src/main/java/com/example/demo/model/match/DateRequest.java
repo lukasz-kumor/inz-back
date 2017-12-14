@@ -9,10 +9,12 @@ public class DateRequest {
 
 private String dateFrom;
 private String dateTo;
+private String city;
 
 public DateRequest(){}
-public DateRequest(String dateFrom, String dateTo){
+public DateRequest(String dateFrom, String dateTo,String city){
     this.dateFrom = dateFrom;
     this.dateTo=dateTo;
+    this.city=city;
 }
 }

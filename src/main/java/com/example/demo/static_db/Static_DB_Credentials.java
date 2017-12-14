@@ -46,7 +46,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         _user1.setName("Łukasz");
         _user1.setLastname("Kumor");
         _user1.setEmail("1aryan@wp.pl");
-        _user1.setPassword("12341234");
+        _user1.setPassword("1234");
         _user1.setPhone("668087723");
         _user1.setRole("Admin");
         _user1.setYear(1995);

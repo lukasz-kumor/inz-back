@@ -160,9 +160,18 @@ public List<MatchDAO> filterMatchesByDates(List<MatchDAO> foundMatches, DateRequ
     } catch (ParseException e) {
         e.printStackTrace();
     }
-    for(int i=0;i<foundMatches.size();i++){
-        if(foundMatches.get(i).getBeginDate().after(startDate) && foundMatches.get(i).getBeginDate().before(endDate)) filteredMatches.add(foundMatches.get(i));
+    if(dates.getCity()==null || dates.getCity()==""){
+        for(int i=0;i<foundMatches.size();i++){
+             if(foundMatches.get(i).getBeginDate().after(startDate) && foundMatches.get(i).getBeginDate().before(endDate)) filteredMatches.add(foundMatches.get(i));
+    }}
+    else
+    {
+        for(int i=0;i<foundMatches.size();i++){
+            if(foundMatches.get(i).getBeginDate().after(startDate) && foundMatches.get(i).getBeginDate().before(endDate) && dates.getCity().equalsIgnoreCase(foundMatches.get(i).getHall().getCity())) filteredMatches.add(foundMatches.get(i));
+
+        }
     }
+
     return filteredMatches;
 
 
