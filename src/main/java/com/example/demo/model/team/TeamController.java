@@ -24,6 +24,7 @@ public class TeamController {
     @PostMapping(value = "/create/team/{id}")
     public ResponseEntity<?> createTeam(@PathVariable Integer id, @RequestBody TeamDAO newTeam) {
 
+
         if(newTeam.getCity().length()<3 || newTeam.getName().length()<3) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         _User checkUser = _userRepository.findById(id);
         if(checkUser.getTeamDAO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
@@ -39,15 +40,17 @@ public class TeamController {
     @Transactional
     @GetMapping(value ="/team/remove/player/{id}")
     public ResponseEntity<?> removePlayerFromTeam(@PathVariable Integer id){
-
         _userRepository.findById(id).setTeamDAO(null);
-        return new ResponseEntity<>(id,HttpStatus.OK);
+
+    return new ResponseEntity<>(id,HttpStatus.OK);
     }
 
     @PostMapping(value = "/edit/team/{id}")
     public ResponseEntity<?> editTeam(@PathVariable Integer id, @RequestBody TeamDAO editedTeam){
 
+
         TeamDAO team = teamRepository.findById(id);
+
         if(teamRepository.findById(id).getDateOfEdit()!=null) {
             Date date = teamRepository.findById(id).getDateOfEdit();
             Calendar dateOfChanges = Calendar.getInstance();
@@ -69,9 +72,13 @@ public class TeamController {
                 }
                 else return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
                 }
+
+
+
             } else return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
         teamRepository.save(team);
         return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
 }

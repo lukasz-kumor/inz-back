@@ -30,6 +30,7 @@ public class AdminMsgController {
         AdminMsgDAO amd = new AdminMsgDAO(msgRequest.getMsg(),_user);
         adminMsgRepository.save(amd);
 
+
         return new ResponseEntity<>(msgRequest, HttpStatus.OK);
     }
 
@@ -56,14 +57,16 @@ public class AdminMsgController {
         mailSenderService.sendEmail(from,to,subject,body);
         adminMsgRepository.delete(adminMsgRepository.findBy_user_Id(user_messager.getId()));
 
+
+
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 
     @PostMapping(value = "/delete/msg")
     public ResponseEntity<?> deleteMessage(@RequestBody AdminAnswer answer) {
 
-        _User user_message = userRepository.findByEmail(answer.getEmail());
-        adminMsgRepository.delete(adminMsgRepository.findBy_user_Id(user_message.getId()));
+        _User user_messager = userRepository.findByEmail(answer.getEmail());
+        adminMsgRepository.delete(adminMsgRepository.findBy_user_Id(user_messager.getId()));
 
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }

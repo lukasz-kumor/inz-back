@@ -36,7 +36,7 @@ public class MatchController {
 
     private static final Logger log = LoggerFactory.getLogger(MatchController.class);
 
-    @Scheduled(fixedRate = 1800000)
+    @Scheduled(fixedRate = 36000)
     public void checkFinishedMatches() {
     List<MatchDAO> finishedMatches = matchRepository.findAllByFinished(true);
         Calendar finishDate = Calendar.getInstance();
@@ -49,11 +49,12 @@ public class MatchController {
         finishDate.add(Calendar.HOUR_OF_DAY, 3);
        if(finishDate.before(now)) matchRepository.findById((finishedMatches.get(i).getId()));
         log.info("Finished match : " + matchRepository.findById((finishedMatches.get(i).getId())));
-    }}
+    }
+
+    }
 
 @PostMapping(value = "/match/invite")
     public ResponseEntity<?> inviteToMatch(@RequestBody MatchRequest matchInv){
-
     Date matchDate = setHourToDate(matchInv.getDate(),matchInv.getHour());
     if(matchRepository.findByBeginDateAndTeamAidAndTeamBid(matchDate,matchInv.getTeamA_id(),matchInv.getTeamB_id())!=null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     if(!checkDates(matchInv.getDate()))  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -69,58 +70,52 @@ public class MatchController {
     public ResponseEntity<List<MatchResponse>> getTeamInvites(@PathVariable Integer id){
 
     List<MatchDAO> invitesList= matchRepository.findAllByTeamBidAndActiveAndTeamBaccepted(id,false,false);
-    List<MatchResponse> responseList;
+    List<MatchResponse> responseList = new ArrayList<>();
     responseList = generateInvResponse(invitesList);
 
-    return new ResponseEntity<>(responseList, HttpStatus.OK);
+        return new ResponseEntity<List<MatchResponse>>(responseList, HttpStatus.OK);
 
 }
     @GetMapping(value = "/match/ref/accept/{id}")
     public ResponseEntity<?> refAcceptMatch(@PathVariable Integer id){
-
         MatchDAO match = matchRepository.findById(id);
         match.setRefAccepted(true);
         if(match.isTeamBaccepted()) match.setActive(true);
         matchRepository.save(match);
-
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping(value = "/match/team/accept/{id}")
     public ResponseEntity<?> teamAcceptMatch(@PathVariable Integer id){
-
         MatchDAO match = matchRepository.findById(id);
         match.setTeamBaccepted(true);
         if(match.isRefAccepted()) match.setActive(true);
         matchRepository.save(match);
-
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping(value = "/match/deny/{id}")
     public ResponseEntity<?> teamDenyMatch(@PathVariable Integer id){
-
         MatchDAO match = matchRepository.findById(id);
         matchRepository.delete(match);
-
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/match/invites/ref/{id}")
     public ResponseEntity<List<MatchResponse>> getRefInvites(@PathVariable Integer id){
-
         List<MatchDAO> invitesList = matchRepository.findAllByRefIdAndRefAccepted(id,false);
-        List<MatchResponse> responseList;
+        List<MatchResponse> responseList = new ArrayList<>();
         responseList = generateInvResponse(invitesList);
 
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
+        return new ResponseEntity<List<MatchResponse>>(responseList, HttpStatus.OK);
 
     }
 
     public List<MatchResponse> generateInvResponse(List<MatchDAO> invitesList){
 
         List<MatchResponse> responseList = new ArrayList<>();
+
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
         for(int i=0; i<invitesList.size();i++){
@@ -133,16 +128,17 @@ public class MatchController {
             response.setSalary(invitesList.get(i).getSalary());
             response.setId(invitesList.get(i).getId());
             responseList.add(response);
+
         }
         return responseList;
     }
 
     public Date setHourToDate(Date date, String hour){
-
         String newHour = hour.substring(0,2);
         int intHour = Integer.parseInt(newHour);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+
         cal.set(Calendar.HOUR_OF_DAY,intHour);
         cal.set(Calendar.MINUTE,0);
         cal.set(Calendar.SECOND,0);
@@ -152,14 +148,12 @@ public class MatchController {
         return d;
     }
     public boolean checkDates(Date date){
-
         Calendar now = Calendar.getInstance();
         now.setTime(new Date());
         now.add(Calendar.DATE, 2);
         Calendar matchDate = Calendar.getInstance();
         matchDate.setTime(date);
         if(matchDate.before(now)) return false;
-
         return true;
     }
 }

@@ -36,18 +36,26 @@ public class _User {
     @NotNull
     private boolean isActivated=false;
     @NotNull
-    private boolean isBanned=false;
+    private boolean isBanned=false; //dodać logike banowania użytkowników dla admina
 
     @ManyToOne
     @JoinColumn(name = "teamDAO",
             referencedColumnName = "id")
     private TeamDAO teamDAO;
 
+
     private Date dateOfEdit=null;
     private Date dateOfPasswordRetrieve=null;
-    private String code;
+//    private Date dateOfSalaryEdit=null;
 
+//    //ref
+//    private int salary=0;
+
+
+    private String code;
     public _User(){}
+
+
     public _User(String email, String lastname, String name, String password, String phone, int year, String role) {
         this.email= email;
         this.lastname = lastname;
@@ -65,6 +73,8 @@ public class _User {
         this.phone = phone;
         this.year = year;
     }
+
+
 
     @Override
     public String toString(){
