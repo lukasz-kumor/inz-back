@@ -27,7 +27,6 @@ public class HallResponse {
 
     }
 
-
     @Override
     public String toString(){
         return "HallResponse{" +

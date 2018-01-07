@@ -26,20 +26,12 @@ public class MatchRequest{
         this.hallId=hallId;
         this.teamA_id=teamA_id;
         this.teamB_id=teamB_id;
-
     }
     public MatchRequest(int teamA_id, int teamB_id, int refId, Date date){
         this.teamB_id=teamB_id;
         this.teamA_id=teamA_id;
         this.refId=refId;
         this.date=date;
-    }
-
-    @Override
-    public String toString(){
-        return "MatchReq{" +
-                    salary +"/"+ hour +"/"+ date + "/"+refId +"/"+ hallId +"/"+ teamA_id + "/"+teamB_id+
-                "}";
     }
 }
 

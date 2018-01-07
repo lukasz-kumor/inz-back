@@ -20,9 +20,7 @@ public class _UserResponse {
     private int salary;
     private TeamDAO team;
 
-    public _UserResponse(){
-
-    }
+    public _UserResponse(){ }
     public _UserResponse(_User user){
         this.id=user.getId();
         this.name=user.getName();
@@ -34,7 +32,6 @@ public class _UserResponse {
         this.team=user.getTeamDAO();
 
     }
-
 
     @Override
     public String toString(){

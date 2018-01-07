@@ -15,37 +15,41 @@ public class HallController {
 
     @PostMapping(value = "/add/hall")
     public ResponseEntity<?> addHall(@RequestBody HallDAO newHall){
-    if(hallRepository.findByCityAndAdress(newHall.getCity(), newHall.getAdress()) !=null) {
 
+    if(hallRepository.findByCityAndAdress(newHall.getCity(), newHall.getAdress()) !=null) {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
     hallRepository.save(newHall);
+
     return new ResponseEntity(newHall,HttpStatus.OK);
     }
 
     @GetMapping(value ="/halls/inactive")
     public ResponseEntity<?> getInactiveHalls(){
-        List<HallDAO> foundHalls = hallRepository.findAllByAndActivated(false);
 
+        List<HallDAO> foundHalls = hallRepository.findAllByAndActivated(false);
         if(foundHalls.size()==0) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         return new ResponseEntity(foundHalls,HttpStatus.OK);
     }
     @GetMapping(value ="/halls/activate/{id}")
-    public ResponseEntity<?> getInactiveHalls(@PathVariable int id){
-        if(hallRepository.findById(id) ==null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> activateHall(@PathVariable int id){
+
+        if(hallRepository.findById(id)==null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         HallDAO hall = hallRepository.findById(id);
         hall.setActivated(true);
         hallRepository.save(hall);
-        System.out.println(hallRepository.findById(id));
+
         return new ResponseEntity(id,HttpStatus.OK);
     }
 
     @GetMapping(value ="/halls/delete/{id}")
     public ResponseEntity<?> deleteHalls(@PathVariable int id){
+
         if(hallRepository.findById(id) ==null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         HallDAO hall = hallRepository.findById(id);
         hallRepository.delete(hall);
+
         return new ResponseEntity(id,HttpStatus.OK);
     }
 }

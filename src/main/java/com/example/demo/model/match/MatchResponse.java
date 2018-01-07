@@ -11,23 +11,23 @@ import java.util.Date;
 @Setter
 public class MatchResponse {
 
-private HallDAO hall;
-private TeamDAO teamA;
-private TeamDAO teamB;
-private _User ref;
-private String date;
-private int salary;
-private int id;
-public MatchResponse(){ }
-public MatchResponse(int id,HallDAO hall, TeamDAO teamA, TeamDAO teamB, _User ref, String date,int salary){
-    this.hall=hall;
-    this.teamA=teamA;
-    this.teamB=teamB;
-    this.ref=ref;
-    this.date=date;
-    this.salary=salary;
-    this.id=id;
-}
+    private HallDAO hall;
+    private TeamDAO teamA;
+    private TeamDAO teamB;
+    private _User ref;
+    private String date;
+    private int salary;
+    private int id;
+    public MatchResponse(){ }
+    public MatchResponse(int id,HallDAO hall, TeamDAO teamA, TeamDAO teamB, _User ref, String date,int salary){
+        this.hall=hall;
+        this.teamA=teamA;
+        this.teamB=teamB;
+        this.ref=ref;
+        this.date=date;
+        this.salary=salary;
+        this.id=id;
+    }
     @Override
     public String toString(){
         return "MatchResponse{" +

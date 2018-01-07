@@ -17,4 +17,5 @@ public DateRequest(String dateFrom, String dateTo,String city){
     this.dateTo=dateTo;
     this.city=city;
 }
+
 }

@@ -10,8 +10,8 @@ public class SearchUserRequest {
     private String email;
     private String role;
     private String lastname;
-    public SearchUserRequest(){}
 
+    public SearchUserRequest(){}
     public SearchUserRequest(String name, String email, String role,String lastname){
         this.name = name;
         this.email = email;

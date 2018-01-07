@@ -25,7 +25,9 @@ public class TeamInvitationController {
 public ResponseEntity<?>  inviteUser(@RequestBody TeamInvitationRequest request) {
 
     _User user = userRepository.findByEmail(request.getUserEmail());
+
     TeamDAO team = teamRepository.findByName(request.getTeamName());
+    if(userRepository.findAllByTeamDAO(team).size()>12) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
     if(user.getTeamDAO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
    if(teamInvitationRepository.findByTeamDAO_IdAndUserId(team.getId(),user.getId())!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
     TeamInvitationDAO teamInvitation = new TeamInvitationDAO(team,user.getId());

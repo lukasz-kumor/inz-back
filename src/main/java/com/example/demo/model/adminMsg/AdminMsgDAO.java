@@ -19,7 +19,7 @@ public class AdminMsgDAO {
     private int id;
     @NotNull
     private String msg;
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "user_id",
             referencedColumnName = "id")
     private _User _user;

@@ -15,14 +15,10 @@ import java.util.Random;
 @RestController
 public class _UserController {
 
-
-
     @Autowired
     public MailSenderService mailSenderService;
     @Autowired
     private _UserRepository userRepository;
-
-
 
     @PostMapping(value = "/user")
     public ResponseEntity<_UserResponse> registerUser(@RequestBody _User newUser) {
@@ -56,14 +52,10 @@ public class _UserController {
             Date date = _user.getDateOfEdit();
             Calendar dateOfChanges = Calendar.getInstance();
             dateOfChanges.setTime(date);
-
             Date date2 = new Date();
-
             if(dateOfChanges.getTime().compareTo(date2)<7){
-                System.out.println("nie mozesz zmienic !");
                 return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
             }
-
         }
         if(userRepository.findByEmail(newUser.getEmail()).getDateOfEdit()==null){
             Date date = new Date();
@@ -116,9 +108,8 @@ public class _UserController {
 
     @GetMapping(value = "/user/activate/{code}")
     public StringBuilder activateUser(@PathVariable String code) {
+
         StringBuilder result = new StringBuilder();
-
-
         if(userRepository.findByCode(code).getEmail()==null){
             result.append("Aktywacja nieudana!");
         }
@@ -129,9 +120,7 @@ public class _UserController {
             result.append("Pomyslnie aktywowales konto: ");
             result.append(newUser.getEmail());
         }
-
         return result;
-
     }
 
 

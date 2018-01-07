@@ -23,15 +23,11 @@ public class SearchQueryCreator {
 
     StringBuilder stringBuilder = new StringBuilder("SELECT _user.* from _user WHERE ");
     if(request.getEmail()!=null && !request.getEmail().equals("") ) stringBuilder.append("UPPER(_user.email) = UPPER('" + request.getEmail()+"') AND ");
-
     if(request.getName()!=null && !request.getName().equals("") )  stringBuilder.append("UPPER(_user.name) = UPPER('"+request.getName()+"') AND ");
-
     if(request.getLastname()!=null && !request.getLastname().equals("") ) stringBuilder.append("UPPER(_user.lastname) = UPPER('"+request.getLastname()+"') AND ");
-
     if(request.getRole()!=null && !request.getRole().equals("Wszystkie")) stringBuilder.append("_user.role = '"+request.getRole()+"' AND ");
-
-
     stringBuilder.append("(_user.is_activated = true)");
+
     return stringBuilder.toString();
     }
 
@@ -39,12 +35,10 @@ public class SearchQueryCreator {
 
         StringBuilder stringBuilder = new StringBuilder("SELECT halldao.* from halldao WHERE ");
         if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("UPPER(halldao.city) = UPPER('" + request.getCity()+"') AND ");
-
         if(request.getAdress()!=null && !request.getAdress().equals("") )  stringBuilder.append("UPPER(halldao.adress) = UPPER('"+request.getAdress()+"') AND ");
-
         if(request.getNumber()!=null && !request.getNumber().equals("") ) stringBuilder.append("UPPER(halldao.number) = UPPER('"+request.getNumber()+"') AND ");
-
         stringBuilder.append("(halldao.activated = true)");
+
         return stringBuilder.toString();
     }
 
@@ -52,9 +46,7 @@ public class SearchQueryCreator {
 
         StringBuilder stringBuilder = new StringBuilder("SELECT teamdao.* from teamdao WHERE 1=1 ");
         if(request.getCity()!=null && !request.getCity().equals("") ) stringBuilder.append("AND UPPER(teamdao.city) = UPPER('" + request.getCity()+"')");
-
         if(request.getName()!=null && !request.getName().equals("") )  stringBuilder.append("AND UPPER(teamdao.name) = UPPER('"+request.getName()+"')");
-
 
         return stringBuilder.toString();
     }

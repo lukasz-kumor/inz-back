@@ -81,6 +81,7 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                         "/invitation/player/{id}",
                         "/halls/inactive",
                        "/halls/activate/{id}",
+                       "/halls/delete/{id}",
                        "/invitation/deny/{idPlayer}/{idTeam}",
                        "/invitation/accept/{idPlayer}/{idTeam}",
                        "/team/remove/player/{id}",
@@ -96,7 +97,6 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                        "/matches/search/{id}",
                        "/matches/ref/search/{id}",
                        "/matches/search/bydate"
-
                         ).permitAll()
                .anyRequest().authenticated();
 
