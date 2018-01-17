@@ -39,8 +39,6 @@ public class SearchController {
     @Autowired
     private SearchQueryCreator SQC;
     @Autowired
-    private HallRepository hallRepository;
-    @Autowired
     private TeamRepository teamRepository;
     @Autowired
     private MatchRepository matchRepository;
@@ -55,7 +53,7 @@ public class SearchController {
         Integer total = foundUsers.size();
         headers.add("total", total.toString());
         System.out.println(headers);
-         return new ResponseEntity<List<_UserResponse>>(response, headers, HttpStatus.OK);
+         return new ResponseEntity<>(response, headers, HttpStatus.OK);
 
     }
 
@@ -80,7 +78,7 @@ private List<_UserResponse> generateUserResponse(List<_User> _users){
         Integer total = foundHalls.size();
         headers.add("total", total.toString());
 
-        return new ResponseEntity<List<HallResponse>>(response, headers, HttpStatus.OK);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
 
     }
 
@@ -126,7 +124,7 @@ public ResponseEntity<List<MatchResponse>> searchForMatches(){
     headers.add("total", total.toString());
 
 
-    return new ResponseEntity<List<MatchResponse>>(response, headers, HttpStatus.OK);
+    return new ResponseEntity<>(response, headers, HttpStatus.OK);
 
 }
 @PostMapping(value = "/matches/search/bydate")
@@ -140,7 +138,7 @@ public ResponseEntity<List<MatchResponse>> searchForMatchesByDate(@RequestBody D
     Integer total = response.size();
     headers.add("total", total.toString());
 
-    return new ResponseEntity<List<MatchResponse>>(response, headers, HttpStatus.OK);
+    return new ResponseEntity<>(response, headers, HttpStatus.OK);
 }
 
 public List<MatchDAO> filterMatchesByDates(List<MatchDAO> foundMatches, DateRequest dates){
@@ -182,7 +180,7 @@ public ResponseEntity<List<MatchResponse>> searchForTeamMatches(@PathVariable In
     List<MatchDAO> foundMatches = matchRepository.findAllByTeamAidOrTeamBidAndFinishedAndActive(id,id,false,true);
     List<MatchResponse> response = generateMatchResponse(foundMatches);
     if(response.isEmpty()) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-    return new ResponseEntity<List<MatchResponse>>(response, HttpStatus.OK);
+    return new ResponseEntity<>(response, HttpStatus.OK);
 
 }
 
@@ -191,7 +189,7 @@ public ResponseEntity<List<MatchResponse>> searchForTeamMatches(@PathVariable In
         List<MatchDAO> foundMatches = matchRepository.findAllByRefIdAndActive(id,true);
         List<MatchResponse> response = generateMatchResponse(foundMatches);
 
-        return new ResponseEntity<List<MatchResponse>>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 

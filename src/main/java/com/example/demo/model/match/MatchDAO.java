@@ -20,7 +20,7 @@ public class MatchDAO {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "hallDAO",
+    @JoinColumn(name = "HallDAO",
             referencedColumnName = "id")
     private HallDAO hall;
     @NotNull

@@ -25,9 +25,9 @@ public class TeamController {
     public ResponseEntity<?> createTeam(@PathVariable Integer id, @RequestBody TeamDAO newTeam) {
 
 
-        if(newTeam.getCity().length()<3 || newTeam.getName().length()<3) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        if(newTeam.getCity().length()<3 || newTeam.getName().length()<3) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         _User checkUser = _userRepository.findById(id);
-        if(checkUser.getTeamDAO()!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        if(checkUser.getTeamDAO()!=null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         if(newTeam.getDescription().length()>60 || newTeam.getCity().length()>30 || newTeam.getName().length()>30) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
 
         teamRepository.save(newTeam);
