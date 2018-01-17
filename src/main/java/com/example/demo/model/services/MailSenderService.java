@@ -16,6 +16,7 @@ public class MailSenderService {
    public MailSenderService(JavaMailSenderImpl javaMailSenderImpl){
        this.javaMailSenderImpl = javaMailSenderImpl;
    }
+
     @Async
     public void sendEmail(String from, String to, String subject, String body){
        MimeMessage mimeMessage = javaMailSenderImpl.createMimeMessage();
@@ -26,7 +27,9 @@ public class MailSenderService {
         message.setSubject(subject);
         message.setText(body);
     }
-    catch(MessagingException e){}
+    catch(MessagingException e){
+        e.printStackTrace();
+    }
        javaMailSenderImpl.send(mimeMessage);
     }
 

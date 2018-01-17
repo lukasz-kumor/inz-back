@@ -28,7 +28,7 @@ public class _UserController {
     public ResponseEntity<_UserResponse> registerUser(@RequestBody _User newUser) {
 
         if (userRepository.findByEmail(newUser.getEmail()) != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         String code = generateCode();
         newUser.setCode(code);
@@ -36,7 +36,8 @@ public class _UserController {
         String from = "basketblast1234@gmail.com";
         String to = newUser.getEmail();
         String subject = "Aktywacja konta";
-        String body = "Link aktywacyjny do serwisu BasketBlast: " + "http://localhost:8080/user/activate/"+code + "\nLogin: " + newUser.getEmail() + "\nHaslo: " + newUser.getPassword();
+        String body = "Link aktywacyjny do serwisu BasketBlast: "+"http://localhost:8080/user/activate/"+
+        code+"\nLogin: " + newUser.getEmail() + "\nHaslo: " + newUser.getPassword();
         mailSenderService.sendEmail(from,to,subject,body);
 
         userRepository.save(newUser);
@@ -48,7 +49,7 @@ public class _UserController {
     public ResponseEntity<_UserResponse> editUser(@RequestBody _User newUser) {
 
         if (userRepository.findByEmail(newUser.getEmail()) == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         _User _user = userRepository.findByEmail(newUser.getEmail());
 
@@ -56,14 +57,11 @@ public class _UserController {
             Date date = _user.getDateOfEdit();
             Calendar dateOfChanges = Calendar.getInstance();
             dateOfChanges.setTime(date);
-
             Date date2 = new Date();
 
-            if(dateOfChanges.getTime().compareTo(date2)<7){
-                System.out.println("nie mozesz zmienic !");
-                return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            if(dateOfChanges.getTime().compareTo(date2) < 7){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
         }
         if(userRepository.findByEmail(newUser.getEmail()).getDateOfEdit()==null){
             Date date = new Date();
@@ -76,48 +74,14 @@ public class _UserController {
         userRepository.save(_user);
         _UserResponse response = new _UserResponse(_user);
 
-        return new ResponseEntity<_UserResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/retrieve/{id}")
-    public ResponseEntity<?> getPassword(@PathVariable Integer id) {
 
-        if(userRepository.findById(id)==null){
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        }
-        _User _user = userRepository.findById(id);
-
-        if(userRepository.findById(id).getDateOfPasswordRetrieve()!=null) {
-            Date date = _user.getDateOfPasswordRetrieve();
-            Date dateNow = new Date();
-            long diff = dateNow.getTime() - date.getTime();
-            long diffHours = diff / (60 * 60 * 1000);
-
-            if (diffHours < 1) {
-                return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-            }
-        }
-        if(userRepository.findById(id).getDateOfPasswordRetrieve()==null){
-            Date date3 = new Date();
-            System.out.println(date3);
-            _user.setDateOfPasswordRetrieve(date3);
-            userRepository.save(_user);
-        }
-
-        String from = "basketblast1234@gmail.com";
-        String to = _user.getEmail();
-        String subject = "Przypomnienie hasła";
-        String body = "Twoje hasło do serwisu BasketBlast to: " + "\n" + _user.getPassword();
-        mailSenderService.sendEmail(from,to,subject,body);
-
-        return new ResponseEntity<>(id,HttpStatus.OK);
-
-    }
 
     @GetMapping(value = "/user/activate/{code}")
     public StringBuilder activateUser(@PathVariable String code) {
         StringBuilder result = new StringBuilder();
-
 
         if(userRepository.findByCode(code).getEmail()==null){
             result.append("Aktywacja nieudana!");
@@ -129,9 +93,7 @@ public class _UserController {
             result.append("Pomyslnie aktywowales konto: ");
             result.append(newUser.getEmail());
         }
-
         return result;
-
     }
 
 
@@ -156,7 +118,8 @@ public class _UserController {
        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
- public String generateCode(){
+    private String generateCode(){
+     String code;
      char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
      StringBuilder sb = new StringBuilder();
      Random random = new Random();
@@ -164,10 +127,9 @@ public class _UserController {
          char c = chars[random.nextInt(chars.length)];
          sb.append(c);
      }
-     String code = sb.toString();
+     code = sb.toString();
      return code;
-
- }
+    }
 
 
 }

@@ -10,7 +10,7 @@ public interface MatchRepository extends CrudRepository<MatchDAO, Integer> {
 MatchDAO findByBeginDateAndTeamAidAndTeamBid(Date date, int teamAid, int teamBid);
 List<MatchDAO> findAllByTeamBidAndActiveAndTeamBaccepted(int id,boolean inv,boolean teamBaccepted);
 List<MatchDAO> findAllByRefIdAndRefAccepted(int id,boolean refAccepted);
-List<MatchDAO> findAllByFinished(boolean finished);
+List<MatchDAO> findAll();
 MatchDAO findById(int id);
 List<MatchDAO> findAllByActive(boolean active);
 List<MatchDAO> findAllByTeamAidOrTeamBidAndFinishedAndActive(int teamAid, int teamBid,boolean finished,boolean active);

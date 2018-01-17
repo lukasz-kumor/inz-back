@@ -11,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.xml.ws.Response;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,34 +38,46 @@ public class MatchController {
 
     private static final Logger log = LoggerFactory.getLogger(MatchController.class);
 
-    @Scheduled(fixedRate = 36000)
+
+    @Async
+    @Scheduled(fixedRate = 1800000)
     public void checkFinishedMatches() {
-    List<MatchDAO> finishedMatches = matchRepository.findAllByFinished(true);
+
+    List<MatchDAO> finishedMatches = matchRepository.findAll();
         Calendar finishDate = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
-        finishDate.setTime(new Date());
+
         now.setTime(new Date());
+        now.add(Calendar.HOUR_OF_DAY,3);
+
 
     for(int i=0;i<finishedMatches.size();i++){
         finishDate.setTime(finishedMatches.get(i).getBeginDate());
-        finishDate.add(Calendar.HOUR_OF_DAY, 3);
-       if(finishDate.before(now)) matchRepository.findById((finishedMatches.get(i).getId()));
-        log.info("Finished match : " + matchRepository.findById((finishedMatches.get(i).getId())));
-    }
 
-    }
+        if(finishDate.before(now)) {
+            matchRepository.delete(finishedMatches.get(i).getId());
+        }
+    }}
+
+
+
+
 
 @PostMapping(value = "/match/invite")
-    public ResponseEntity<?> inviteToMatch(@RequestBody MatchRequest matchInv){
-    Date matchDate = setHourToDate(matchInv.getDate(),matchInv.getHour());
-    if(matchRepository.findByBeginDateAndTeamAidAndTeamBid(matchDate,matchInv.getTeamA_id(),matchInv.getTeamB_id())!=null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    if(!checkDates(matchInv.getDate()))  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    System.out.println("------REFSALARY" + matchInv.getSalary());
-    MatchDAO match = new MatchDAO(hallRepository.findById(matchInv.getHallId()),matchInv.getTeamA_id(),matchInv.getTeamB_id(),matchDate,matchInv.getRefId(),matchInv.getSalary());
+public ResponseEntity<?> inviteToMatch(@RequestBody MatchRequest matchInv){
+
+  Date matchDate = setHourToDate(matchInv.getDate(),matchInv.getHour());
+
+if(matchRepository.findByBeginDateAndTeamAidAndTeamBid(matchDate,matchInv.getTeamA_id(),matchInv.getTeamB_id())!=null)
+     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+if(!checkDates(matchInv.getDate()))
+     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+MatchDAO match = new MatchDAO(hallRepository.findById(
+matchInv.getHallId()),matchInv.getTeamA_id(),matchInv.getTeamB_id(),matchDate,matchInv.getRefId(),matchInv.getSalary());
+
     matchRepository.save(match);
-
     return new ResponseEntity<>(matchInv, HttpStatus.OK);
-
 }
 
 @GetMapping(value = "/match/invites/{id}")
@@ -133,9 +147,11 @@ public class MatchController {
         return responseList;
     }
 
-    public Date setHourToDate(Date date, String hour){
+    private Date setHourToDate(Date date, String hour){
+        Date d;
         String newHour = hour.substring(0,2);
         int intHour = Integer.parseInt(newHour);
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
@@ -143,11 +159,11 @@ public class MatchController {
         cal.set(Calendar.MINUTE,0);
         cal.set(Calendar.SECOND,0);
         cal.set(Calendar.MILLISECOND,0);
-        Date d = cal.getTime();
+        d = cal.getTime();
 
         return d;
     }
-    public boolean checkDates(Date date){
+    private boolean checkDates(Date date){
         Calendar now = Calendar.getInstance();
         now.setTime(new Date());
         now.add(Calendar.DATE, 2);

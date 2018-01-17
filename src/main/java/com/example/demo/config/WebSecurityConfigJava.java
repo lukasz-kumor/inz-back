@@ -81,6 +81,7 @@ public class WebSecurityConfigJava extends WebSecurityConfigurerAdapter {
                         "/invitation/player/{id}",
                         "/halls/inactive",
                        "/halls/activate/{id}",
+                       "/halls/delete/{id}",
                        "/invitation/deny/{idPlayer}/{idTeam}",
                        "/invitation/accept/{idPlayer}/{idTeam}",
                        "/team/remove/player/{id}",

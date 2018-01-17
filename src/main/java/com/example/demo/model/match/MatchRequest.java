@@ -16,8 +16,8 @@ public class MatchRequest{
    private int teamA_id;
    private int teamB_id;
    private int salary;
-
     public MatchRequest(){}
+
     public MatchRequest(int salary,String hour, Date date, int refId, int hallId, int teamA_id, int teamB_id){
         this.salary=salary;
         this.hour=hour;
@@ -26,7 +26,6 @@ public class MatchRequest{
         this.hallId=hallId;
         this.teamA_id=teamA_id;
         this.teamB_id=teamB_id;
-
     }
     public MatchRequest(int teamA_id, int teamB_id, int refId, Date date){
         this.teamB_id=teamB_id;
