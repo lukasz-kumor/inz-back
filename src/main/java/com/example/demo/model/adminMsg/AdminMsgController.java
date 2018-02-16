@@ -24,6 +24,7 @@ public class AdminMsgController {
     @PostMapping(value = "/msg")
     public ResponseEntity<?> postMessage(@RequestBody AdminMsgRequest msgRequest) {
 
+
         _User _user = userRepository.findById(msgRequest.getId());
         if(adminMsgRepository.findBy_user_Id(msgRequest.getId())!=null) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         if(msgRequest.getMsg().length()>100) return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
