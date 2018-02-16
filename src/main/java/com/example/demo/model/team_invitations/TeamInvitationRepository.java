@@ -1,4 +1,4 @@
-package com.example.demo.team_invitations;
+package com.example.demo.model.team_invitations;
 
 import org.springframework.data.repository.CrudRepository;
 

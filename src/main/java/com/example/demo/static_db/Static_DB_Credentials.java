@@ -34,13 +34,13 @@ public class Static_DB_Credentials implements CommandLineRunner {
         TeamDAO team1 = new TeamDAO();
         team1.setCity("Warszawa");
         team1.setDescription("Drużyna nr 1");
-        team1.setName("TK1 Team");
+        team1.setName("Farmacja Tarchomin");
         teamRepository.save(team1);
 
         TeamDAO team2 = new TeamDAO();
-        team2.setCity("Pcim Dolny");
+        team2.setCity("Jaworzno");
         team2.setDescription("Drużyna nr 2");
-        team2.setName("TK2 Team");
+        team2.setName("Szczakowianka Jaworzno");
         teamRepository.save(team2);
         ///admin
         _User _user1 = new _User();
@@ -118,7 +118,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
         for(int i=0;i<3;i++){
             _User user = new _User();
 
-            user.setName("Sędzia["+i+"]");
+            user.setName("Paweł");
             user.setActivated(true);
             user.setRole("Sędzia");
             user.setPhone("849384758");
@@ -163,7 +163,7 @@ public class Static_DB_Credentials implements CommandLineRunner {
  private void newMatches(){
 
      HallDAO hall3 = new HallDAO();
-     hall3.setAdress("Jakaśulica");
+     hall3.setAdress("Agawy");
      hall3.setCity("Siedlce");
      hall3.setNumber("14b");
      hall3.setPrice("65");
