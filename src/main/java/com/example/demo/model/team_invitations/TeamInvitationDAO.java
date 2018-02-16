@@ -1,4 +1,4 @@
-package com.example.demo.team_invitations;
+package com.example.demo.model.team_invitations;
 
 import com.example.demo.model.team.TeamDAO;
 import lombok.Getter;
